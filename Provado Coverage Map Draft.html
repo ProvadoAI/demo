@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)file:///Users/marilyn/Downloads/ecommerce-landscape-interactive_8.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provado Coverage Map — e-commerce revenue stack</title>
+</head>
+<body style="margin:0">
+<div id="ecom-map">
+  <style>
+    #ecom-map { font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif; color:#1A1A2E; background:#F5F4F1; padding:28px; line-height:1.3; }
+    #ecom-map * { box-sizing:border-box; }
+    #ecom-map .wrap { max-width:1480px; margin:0 auto; }
+    #ecom-map h1 { font-size:26px; font-weight:800; margin:0 0 4px; }
+    #ecom-map .sub { font-size:14px; color:#4A4A5A; margin:0 0 12px; max-width:1040px; }
+    #ecom-map .legend { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; margin-bottom:10px; font-size:12.5px; }
+    #ecom-map .sw { display:inline-flex; align-items:center; gap:6px; }
+    #ecom-map .dot { width:14px; height:14px; border-radius:3px; display:inline-block; }
+    #ecom-map .vocab { font-size:11.5px; color:#5A5A6A; background:#fff; border:1px solid #E2DDD2; border-radius:8px; padding:8px 12px; margin-bottom:8px; }
+    #ecom-map .vocab b { color:#102A43; }
+    #ecom-map .archnote { font-size:11.5px; color:#5B2121; background:#FBEEEE; border:1px solid #E0A8A8; border-radius:8px; padding:8px 12px; margin-bottom:18px; }
+    #ecom-map .archnote b { color:#7A1F1F; }
+    #ecom-map .layer { display:grid; grid-template-columns:150px 1fr; gap:14px; margin-bottom:14px; border-radius:12px; overflow:hidden; }
+    #ecom-map .rail { padding:14px; color:#fff; display:flex; flex-direction:column; justify-content:center; }
+    #ecom-map .rail .ln { font-size:11px; letter-spacing:1.5px; font-weight:700; opacity:.8; }
+    #ecom-map .rail .lt { font-size:17px; font-weight:800; margin:3px 0 6px; }
+    #ecom-map .rail .ld { font-size:11.5px; opacity:.85; line-height:1.35; }
+    #ecom-map .body { padding:14px; display:grid; grid-template-columns:repeat(auto-fit,minmax(225px,1fr)); gap:12px; }
+    #ecom-map .dom { background:#fff; border:1px solid #E2DDD2; border-radius:10px; padding:0 0 10px; display:flex; flex-direction:column; }
+    #ecom-map .dom.clickable { cursor:pointer; transition:box-shadow .15s, transform .15s; }
+    #ecom-map .dom.clickable:hover { box-shadow:0 4px 14px rgba(15,118,110,.18); transform:translateY(-2px); }
+    #ecom-map .dom.clickable.active { box-shadow:0 0 0 2px #0F766E; }
+    #ecom-map .dom h3 { font-size:13px; font-weight:800; color:#fff; background:#102A43; margin:0 0 8px; padding:8px 12px; border-radius:9px 9px 0 0; letter-spacing:.3px; display:flex; justify-content:space-between; align-items:center; gap:6px; }
+    #ecom-map .dom h3 .exp { font-size:10px; font-weight:700; opacity:.85; white-space:nowrap; }
+    #ecom-map .grp { padding:0 11px 2px; }
+    #ecom-map .grp .gl { font-size:10.5px; letter-spacing:.6px; font-weight:700; color:#7A6F5C; text-transform:uppercase; margin:6px 0 5px; }
+    #ecom-map .chips { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:6px; }
+    #ecom-map .chip { font-size:11.5px; padding:4px 9px; border-radius:13px; border:1px solid transparent; white-space:nowrap; }
+    #ecom-map .own { background:#0F766E; color:#fff; }
+    #ecom-map .partial { background:#FBEFD9; color:#8A5200; border-color:#E0B250; }
+    #ecom-map .none { background:#ECEAE5; color:#8A8275; border-color:#D8D3C6; }
+    #ecom-map .deferred { background:#fff; color:#475569; border:1px dashed #94A3B8; }
+    #ecom-map .anchor { background:#EAF1F7; color:#28557A; border:1px solid #A9C5DD; }
+    #ecom-map .tp { background:#F3EFFA; color:#5B4B8A; border:1px solid #B9A8DD; }
+    #ecom-map .consume { background:#DCEFEA; color:#0B5A52; border:1px solid #6FB3AA; }
+    #ecom-map .feeds { padding:2px 11px 0; font-size:10px; color:#0F766E; font-weight:700; letter-spacing:.2px; }
+    #ecom-map .feeds span { font-weight:600; color:#3F7CC4; }
+    #ecom-map .meta { margin-top:auto; padding:6px 11px 0; border-top:1px dashed #E2DDD2; }
+    #ecom-map .telem { font-size:9.5px; color:#6B5E8C; line-height:1.45; }
+    #ecom-map .telem b { color:#4C3D7A; letter-spacing:.4px; }
+    #ecom-map .agent { display:inline-block; margin-top:5px; font-size:9.5px; font-weight:800; letter-spacing:.4px; color:#fff; border-radius:4px; padding:2px 7px; }
+    #ecom-map .agent.infra { background:#6D28D9; }
+    #ecom-map .agent.tseo { background:#0E7490; }
+    #ecom-map .agent.feed { background:#B45309; }
+    #ecom-map .agent.comm { background:#BE185D; }
+    #ecom-map .agent.analy { background:#4D7C0F; }
+    #ecom-map .agent.engine { background:#1F2937; }
+    #ecom-map .agent.out { background:#9A9486; }
+    #ecom-map .cond { border-style:dashed; }
+    #ecom-map .engineband { display:grid; grid-template-columns:150px 1fr; gap:14px; margin:0 0 14px; }
+    #ecom-map .engineband .erail { background:#1F2937; color:#fff; border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; justify-content:center; }
+    #ecom-map .engineband .erail .ln { font-size:10px; letter-spacing:1.4px; font-weight:700; opacity:.8; }
+    #ecom-map .engineband .erail .lt { font-size:14px; font-weight:800; }
+    #ecom-map .engineband .ebody { background:#111827; color:#D1D5DB; border-radius:12px; padding:11px 16px; font-size:12px; line-height:1.5; display:flex; align-items:center; }
+    #ecom-map .engineband .ebody b { color:#fff; }
+    #ecom-map .drillzone { margin:10px 0 20px; }
+    #ecom-map .drillhint { background:#fff; border:1.5px dashed #0F766E; border-radius:12px; padding:12px 18px; font-size:12.5px; color:#0F766E; font-weight:600; text-align:center; }
+    #ecom-map .drillpanel { display:none; background:#fff; border:1.5px solid #0F766E; border-radius:12px; padding:16px 18px; }
+    #ecom-map .drillpanel h2 { font-size:16px; margin:0 0 2px; color:#0F766E; font-weight:800; }
+    #ecom-map .drillpanel .dd { font-size:12.5px; color:#5A5A6A; margin:0 0 10px; }
+    #ecom-map .trace { display:flex; flex-direction:column; }
+    #ecom-map .trow { display:grid; grid-template-columns:140px 1fr 196px; align-items:stretch; }
+    #ecom-map .tl { color:#fff; padding:12px; display:flex; flex-direction:column; justify-content:center; }
+    #ecom-map .tl .ln { font-size:9.5px; letter-spacing:1px; font-weight:700; opacity:.8; }
+    #ecom-map .tl .lt { font-size:13px; font-weight:800; }
+    #ecom-map .tm { background:#fff; border:1px solid #E2DDD2; border-left:none; padding:11px 13px; }
+    #ecom-map .tm .gl { font-size:10.5px; font-weight:800; color:#102A43; margin:0 0 6px; }
+    #ecom-map .tr { background:#F0F4F8; border:1px solid #D7E0EA; border-left:none; padding:11px 13px; display:flex; flex-direction:column; justify-content:center; }
+    #ecom-map .tr .rt { font-size:9.5px; font-weight:800; letter-spacing:.4px; color:#0F766E; text-transform:uppercase; margin-bottom:3px; }
+    #ecom-map .tr .rd { font-size:11px; color:#3A3A4A; line-height:1.3; }
+    #ecom-map .tarrow { text-align:center; color:#0F766E; font-size:13px; font-weight:800; padding:2px 0; }
+    #ecom-map .dfan { margin-top:13px; background:#EAF1F1; border-radius:8px; padding:10px 13px; font-size:12px; color:#235; }
+    #ecom-map .dfan b { color:#102A43; }
+    #ecom-map .l0tbl { width:100%; border-collapse:collapse; margin-top:6px; font-size:12px; }
+    #ecom-map .l0tbl th { text-align:left; padding:7px 9px; background:#102A43; color:#fff; font-size:10.5px; letter-spacing:.3px; }
+    #ecom-map .l0tbl td { padding:8px 9px; border-bottom:1px solid #ECEAE5; vertical-align:top; }
+    #ecom-map .l0tbl td.c1 { font-weight:700; color:#102A43; width:230px; }
+    #ecom-map .l0tbl td.c2 { width:150px; }
+    #ecom-map .cmp { width:100%; border-collapse:collapse; margin-top:8px; font-size:11.5px; }
+    #ecom-map .cmp th { text-align:left; padding:7px 9px; background:#102A43; color:#fff; font-size:10.5px; }
+    #ecom-map .cmp td { padding:7px 9px; border-bottom:1px solid #ECEAE5; vertical-align:top; }
+    #ecom-map .cmp td.task { font-weight:700; color:#102A43; width:200px; }
+    #ecom-map .cmp .yes { color:#0F766E; font-weight:700; }
+    #ecom-map .cmp .no { color:#9A8F7C; }
+    #ecom-map .cmphdr { font-size:12px; font-weight:800; color:#102A43; margin:16px 0 2px; }
+    #ecom-map .foot { font-size:11.5px; color:#9A9486; font-style:italic; margin-top:14px; }
+    #ecom-map .symptom { background:#EDEFF2; color:#33404F; border:1px solid #C2CCD8; }
+    #ecom-map .disp { font-size:11px; font-weight:800; letter-spacing:.2px; white-space:nowrap; }
+    #ecom-map .disp.diag { color:#0B5A52; }
+    #ecom-map .disp.part { color:#8A5200; }
+    #ecom-map .disp.out  { color:#8A8275; }
+    #ecom-map .disp.def  { color:#475569; }
+    #ecom-map .grouprow td { background:#F5F4F1; font-weight:800; font-size:10px; letter-spacing:.7px; text-transform:uppercase; color:#7A6F5C; padding:5px 9px; border-bottom:1px solid #E2DDD2; }
+    #ecom-map .xref { color:#0F766E; font-weight:700; cursor:pointer; text-decoration:underline; }
+    @media(max-width:680px){ #ecom-map .trow{grid-template-columns:1fr} #ecom-map .tl,#ecom-map .tm,#ecom-map .tr{border-left:1px solid #E2DDD2} }
+  </style>
+
+  <div class="wrap">
+    <h1>Provado Coverage Map</h1>
+    <p class="sub">The e-commerce revenue stack in four layers by depth — and, for every box, <b>what Provado owns, consumes, or deliberately leaves to others</b>. This is a scope-and-coverage model, not a neutral market landscape: the colours encode Provado's build decisions. <b>Every box is clickable</b> — surfaces expand to a diagnosis-by-layer; capability and technical boxes expand to their components, telemetry, and coverage state.</p>
+
+    <div class="legend">
+      <span class="sw"><span class="dot" style="background:#0F766E"></span> Own</span>
+      <span class="sw"><span class="dot" style="background:#DCEFEA;border:1px solid #6FB3AA"></span> Consume &amp; trace</span>
+      <span class="sw"><span class="dot" style="background:#EAF1F7;border:1px solid #A9C5DD"></span> Anchor (SoR)</span>
+      <span class="sw"><span class="dot" style="background:#F3EFFA;border:1px solid #B9A8DD"></span> 3P covers</span>
+      <span class="sw"><span class="dot" style="background:#ECEAE5;border:1px solid #D8D3C6"></span> Out</span>
+      <span class="sw"><span class="dot" style="background:#fff;border:1px dashed #94A3B8"></span> Deferred</span>
+      <span class="sw"><span class="dot" style="background:#FBEFD9;border:1px solid #E0B250"></span> <i>Partial — legacy, being reclassified</i></span>
+    </div>
+    <div class="vocab"><b>Coverage states — how to read the colours.</b> Every finding is <b>detect → trace → price</b>; the <b>trace</b> (cross-stack causal trace to the operational root) and the <b>price</b> are <b>always</b> Provado's. A box's colour describes only <b>who detects, and whether we can depend on that detector existing in the ICP.</b><br>
+      &nbsp;• <b style="color:#0B5A52">Own</b> — Provado builds the detection. Chosen whenever we can't depend on the merchant having a detecting tool: either no tool exists, or — more often — a tool exists but ICP adoption is thin or unknown, so we build our own (often lightweight) detector rather than take the dependency.<br>
+      &nbsp;• <b style="color:#0B5A52">Consume &amp; trace</b> — a detecting tool is <b>ICP-near-universal</b> (APM, Google Merchant Center, GA4, Algolia where present), so depending on its signal is safe and rebuilding it would be waste plus a credibility risk in front of a technical buyer. We ingest its detection as the symptom; we own the trace + price.<br>
+      &nbsp;• <b style="color:#3A5572">Anchor (SoR)</b> — read-only system-of-record truth we measure and price against (order/revenue record, product master, stock record). Not a detection; never edited.<br>
+      &nbsp;• <b style="color:#5B4B8A">3P covers</b> — a third party owns the capability itself <b>and there is no operational cause for us to trace</b> (ranking/synonyms, recommendation models, full session-replay analytics). We consume output where useful, build nothing. Where such a product is deep but adoption is thin (Profound, Noibu), Provado still carries a lightweight tripwire — and that tripwire is <b>Own</b>, not 3P-covers.<br>
+      &nbsp;• <b>Out</b> — not our problem: business judgment (pricing/merchandising strategy, facet design, CRO), legal (consent compliance), off-thesis (channel attribution). &nbsp;• <b>Deferred</b> — in scope conceptually, not now.<br>
+      <b>Dual chips</b> (e.g. <span class="chip consume" style="font-size:10.5px;padding:2px 7px">Consume &amp; trace</span> <span class="chip own" style="font-size:10.5px;padding:2px 7px">Own*</span>) are not indecision: they mark an <b>adoption branch</b> — Consume where the near-universal tool is present, Own where it isn't — with the asterisk pointing at the discovery question that resolves it. The retired amber <b>Partial</b> chips below are legacy; the map-wide reclassification pass folds each into Own or Consume &amp; trace. <b>At Layer 3 (revenue surfaces)</b> the chips are <b>problems the merchant feels</b>, shown in neutral grey — they carry no coverage colour; the states above apply only at Layers 0–2. Inside each surface a <b>disposition</b> says what Provado does with each problem. <b style="color:#0B5A52">✓ Diagnose</b> — Provado produces the diagnosis (cross-stack <b>trace → price → recommend the fix</b>); the underlying <i>symptom</i> is either Provado-detected or read from a tool the merchant already runs (Consume &amp; trace) — the row and the trace below say which. The trace itself is <b>always Provado's</b>; no third party does it. <b style="color:#8A5200">◐ Partial</b> — Provado diagnoses the operational slice; the judgment / 3P slice is out. <b style="color:#8A8275">⊘ Out</b> — felt here, but no operational cause Provado can trace; the row names who does own it. <b style="color:#475569">⏸ Deferred</b> — in scope conceptually, not now.</div>
+    <div class="vocab"><b>Naming key:</b> <b>Layer</b> = depth band · <b>Domain</b> = titled box · <b>Capability</b> = cluster (in Layer 3 these are <b>channels</b>) · <b>Component</b> = the chip. The <b>orchestrating engine</b> connects agent findings up to the surfaces and prices them.</div>
+    <div class="archnote"><b>Agent tags are a hypothesis, not a commitment.</b> Tags below organize agents by cause-domain (the right principle per the coverage-states decision), but the final agent decomposition is an <b>architecture decision owned by engineering</b> — in particular the COMMERCE tag spans search, pricing, checkout, and content, and may well split into multiple agents. Do not build against these tags until the architecture session settles them.</div>
+
+    <!-- LAYER 3 — SURFACES -->
+    <div class="layer">
+      <div class="rail" style="background:#0F766E">
+        <div class="ln">LAYER 3</div><div class="lt">Revenue surfaces</div>
+        <div class="ld">Where revenue is won or lost — the merchant's words. No per-surface agents: the engine reports here.</div>
+      </div>
+      <div class="body">
+        <div class="dom clickable" id="surf-discover" onclick="showDrill(&#39;discover&#39;)"><h3>DISCOVER <span class="exp">expand ▾</span></h3>
+          <div class="grp"><div class="gl">Search (channel)</div><div class="chips"><span class="chip symptom">Organic / technical SEO</span><span class="chip symptom">Content &amp; keyword strategy</span></div></div>
+          <div class="grp"><div class="gl">AI (channel)</div><div class="chips"><span class="chip symptom">AI visibility (GEO / AEO)</span><span class="chip symptom">Agentic discovery</span></div></div>
+          <div class="grp"><div class="gl">Other channels</div><div class="chips"><span class="chip symptom">Marketplaces / Shopping</span><span class="chip symptom">Paid / email / social / direct</span></div></div>
+          <div class="meta"><div class="telem"><b>SYMPTOM TELEMETRY:</b> GA4 referrals · Search Console · lightweight AI-citation signal · feed status</div><span class="agent engine">ENGINE reports here</span></div>
+        </div>
+        <div class="dom clickable" id="surf-evaluate" onclick="showDrill(&#39;evaluate&#39;)"><h3>EVALUATE <span class="exp">expand ▾</span></h3>
+          <div class="grp"><div class="gl">Finding on site</div><div class="chips"><span class="chip symptom">On-site search</span></div></div>
+          <div class="grp"><div class="gl">Product experience</div><div class="chips"><span class="chip symptom">Product detail page</span><span class="chip symptom">Images &amp; video rendering</span><span class="chip symptom">Merchandising / layout</span></div></div>
+          <div class="grp"><div class="gl">Decision support</div><div class="chips"><span class="chip symptom">Recommendations</span><span class="chip symptom">Ratings &amp; reviews (markup)</span><span class="chip symptom">Comparison / persuasion</span></div></div>
+          <div class="meta"><div class="telem"><b>SYMPTOM TELEMETRY:</b> GA4 funnel (views → add-to-cart) · PDP engagement</div><span class="agent engine">ENGINE reports here</span></div>
+        </div>
+        <div class="dom clickable" id="surf-convert" onclick="showDrill(&#39;convert&#39;)"><h3>CONVERT <span class="exp">expand ▾</span></h3>
+          <div class="grp"><div class="gl">Checkout</div><div class="chips"><span class="chip symptom">Cart &amp; checkout flow</span><span class="chip symptom">Payments / fraud / tax</span><span class="chip symptom">Agentic checkout</span><span class="chip symptom">CRO / A-B / promotions</span></div></div>
+          <div class="meta"><div class="telem"><b>SYMPTOM TELEMETRY:</b> order record vs funnel · lightweight conversion-symptom signal · checkout error events</div><span class="agent engine">ENGINE reports here</span></div>
+        </div>
+        <div class="dom clickable" id="surf-retain" onclick="showDrill(&#39;retain&#39;)"><h3>RETAIN <span class="exp">expand ▾</span></h3>
+          <div class="grp"><div class="gl">Post-purchase</div><div class="chips"><span class="chip symptom">Order mgmt / fulfillment</span><span class="chip symptom">Returns</span><span class="chip symptom">Customer service</span><span class="chip symptom">Loyalty / subscriptions</span></div></div>
+          <div class="meta"><div class="telem"><b>TELEMETRY:</b> order record only (anchor)</div><span class="agent out">OUT OF SCOPE</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENGINE BAND -->
+    <div class="engineband">
+      <div class="erail"><span class="ln">CROSS-LAYER</span><span class="lt">Orchestrating engine</span></div>
+      <div class="ebody"><span><b>Knowledge engine + attribution engine.</b> No single agent sees across layers. The engine takes each agent's cause-domain findings (below), traces the fan-out up to the surfaces (above), correlates symptom ↔ cause by time-window and failure pattern, and prices the revenue impact against the Layer-0 order record. Detection runs bottom-up: watch instrumented signals, catch the fault, price it. When a revenue metric moves, the engine checks the faults already detected in that window — and says honestly when nothing it watches changed.</span></div>
+    </div>
+
+    <!-- SURFACE DRILLS -->
+    <div class="drillzone">
+      <div class="drillhint" id="hint-l3">↑ Click a surface to expand its diagnosis by layer.</div>
+
+      <div class="drillpanel" id="drill-discover">
+        <h2>DISCOVER — diagnosis by layer</h2>
+        <p class="dd">Shoppers and AI aren't finding the products. Traced from the felt symptom down to the technical cause.</p>
+        <div class="cmphdr">What the merchant feels on Discover — and what Provado does with each</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Problem — the merchant's words</th><th>Provado</th><th>What we do — or who owns it</th></tr>
+          <tr class="grouprow"><td colspan="3">Search channel</td></tr>
+          <tr><td class="c1">"My organic rankings / traffic slipped."</td><td class="c2"><span class="disp part">◐ Partial</span></td><td>Diagnose the technical-SEO causes — schema, render, canonicals, robots, the deploy behind them — and price them. Keyword &amp; content <i>strategy</i> is out; an SEO/content agency owns it.</td></tr>
+          <tr><td class="c1">"A page got deindexed — a noindex shipped to production."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Catch the noindex/meta-robots accident (the staging-to-prod catastrophe), trace it to the deploy, price the lost pages, recommend the fix.</td></tr>
+          <tr><td class="c1">"Products dropped out of the sitemap or went orphaned."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Sitemap coverage vs catalog — we know what <i>should</i> be listed because we read the PIM — then trace and price.</td></tr>
+          <tr><td class="c1">"My content and keywords aren't targeting demand."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Content &amp; keyword strategy is creation and judgment — an SEO/content agency's job. No operational cause to trace.</td></tr>
+          <tr class="grouprow"><td colspan="3">AI channel</td></tr>
+          <tr><td class="c1">"My products stopped showing up in AI answers (ChatGPT, Perplexity, Google AI)."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Consume the platform's AI-eligibility signal where present (Shopify and Adobe now provide it), thin tripwire where not. The durable work: when the product is eligible but still not retrieved, diagnose the cross-stack cause, verify price / availability against the source of record, and price the lost discovery. <span class="xref" onclick="showDrill('aivis')">Open the AI-visibility diagnosis →</span></td></tr>
+          <tr><td class="c1">"AI is showing the wrong price or availability for my products."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Detect divergence between what AI sees and the source of record (L0), trace to the sync/feed cause, price the wrong-rec or suppression.</td></tr>
+          <tr><td class="c1">"AI shopping agents can't find or read my products — I'm silently excluded, with no warning signal."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Platform agent feeds and MCP now provide basic agent-readiness (commercetools exposes the catalog to agents via its Commerce MCP; Shopify and Adobe push to agent surfaces). Consume that readiness where present, thin tripwire where not. The durable work: when products are readable but still excluded, diagnose the cause, verify against the source of record, and price it. <span class="xref" onclick="showDrill('agentic')">Open Agentic Protocols →</span></td></tr>
+          <tr><td class="c1">"How often do I show up in AI answers vs competitors?"</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Share of voice moves for reasons outside the stack and localizes no operational cause. Profound-class tools measure it — complementary, not ours.</td></tr>
+          <tr class="grouprow"><td colspan="3">Other channels</td></tr>
+          <tr><td class="c1">"My products got suppressed or disapproved in Google Shopping or a marketplace — silently, with no alert."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Consume Merchant Center disapprovals — Google doesn't notify proactively, and disapprovals on large catalogs go undetected until a manual audit — trace to the attribute/sync/deploy cause, price the zeroed impressions.</td></tr>
+          <tr><td class="c1">"Products are silently missing from my feed — a sync quietly dropped them."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Diff the source of record against the feed, catch the dropped SKUs, trace to the failed sync, price the lost discovery.</td></tr>
+          <tr><td class="c1">"My paid / email / social / direct channels are underperforming."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Channel operations — media agency / ESP own it. <i>Boundary:</i> where the spend is wasted because site faults break the landing experience, that cause <i>is</i> ours (an error-free site is worth a ~26% marketing-ROI swing).</td></tr>
+        </tbody></table>
+        <div class="cmphdr">How a diagnosable problem traces to its cause</div>
+        <div class="trace">
+          <div class="trow"><div class="tl" style="background:#0F766E"><span class="ln">LAYER 3 · surface</span><span class="lt">Discover</span></div><div class="tm"><div class="gl">Symptom the merchant feels</div><div class="chips"><span class="chip symptom">AI visibility dropped</span><span class="chip symptom">Organic rankings slipped</span><span class="chip symptom">Products suppressed in Shopping</span></div></div><div class="tr"><span class="rt">Detect &amp; quantify</span><span class="rd">Measures lost discovery traffic and the revenue at risk.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#1E3A5F"><span class="ln">LAYER 2 · capability</span><span class="lt">Catalog / feed · content</span></div><div class="tm"><div class="gl">Is a capability the culprit?</div><div class="chips"><span class="chip own">Feed accuracy / suppression</span><span class="chip own">Attribute completeness</span><span class="chip none">Content / keyword strategy</span></div></div><div class="tr"><span class="rt">Diagnose capability fault</span><span class="rd">Reads feed and catalog status to see if products are eligible at all.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#283593"><span class="ln">LAYER 1 · technical</span><span class="lt">Technical SEO · rendering</span></div><div class="tm"><div class="gl">Technical root cause — Provado's depth</div><div class="chips"><span class="chip own">Schema / structured data</span><span class="chip own">SSR / render for bots</span><span class="chip own">robots / sitemaps / canonicals</span><span class="chip own">Bot &amp; crawler management</span></div></div><div class="tr"><span class="rt">Instrument &amp; root-cause</span><span class="rd">Pinpoints the broken markup, render, or crawl path AI relies on.</span></div></div>
+          <div class="tarrow">↓ validated on</div>
+          <div class="trow"><div class="tl" style="background:#57534E"><span class="ln">LAYER 0 · data</span><span class="lt">Data layer</span></div><div class="tm"><div class="gl">Is the measurement trustworthy?</div><div class="chips"><span class="chip own">Organic / AI referral tracking</span><span class="chip own">Cross-system data quality</span></div></div><div class="tr"><span class="rt">Validate &amp; anchor</span><span class="rd">Confirms the traffic loss is real before pricing it.</span></div></div>
+        </div>
+        <div class="dfan"><b>Fan-out:</b> <code>schema</code> and <code>SSR</code> here also drive rich results in Evaluate — the same root reaching two surfaces.</div>
+        <p class="dd" style="margin-top:10px">AI is the fastest-moving Discover channel and the one merchants ask about most. <span onclick="showDrill('aivis')" style="color:#0F766E;font-weight:700;cursor:pointer;text-decoration:underline">Open the full AI-visibility diagnosis →</span> — the three tiers, exactly what Provado checks, and where Profound fits.</p>
+      </div>
+
+      <div class="drillpanel" id="drill-aivis">
+        <h2>AI VISIBILITY — Discover surface (GEO / AEO)</h2>
+        <p class="dd">The merchant's question: <b>are my products showing up when people shop through AI?</b> That is an outcome, and outcomes are surface-level — so the whole story is told here, at Discover, even though the <i>causes</i> live in the layers below. Provado's role splits into three tiers.</p>
+
+        <table class="cmp">
+          <tbody><tr><th>Tier</th><th>What it answers</th><th>Coverage</th></tr>
+          <tr><td class="task">1 · Eligibility / readiness checks</td><td>Are the preconditions for AI visibility in place, and has one broken? Machine-checkable, against known requirements. Does <b>not</b> query AI engines. <i>The platforms now provide much of this layer — Shopify scores catalog completeness for AI and one-click-publishes to ChatGPT &amp; Gemini; Adobe's Catalog Agent flags attributes missing from the agent-visible page.</i></td><td><span class="chip consume">Consume where present · thin tripwire where not · always own the cause</span></td></tr>
+          <tr><td class="task">2 · Thin symptom signal</td><td>Has AI-sourced visibility / traffic dropped? A minimal tripwire so causation can fire when the merchant runs no measurement tool.</td><td><span class="chip own">Provado — own</span></td></tr>
+          <tr><td class="task">3 · Full presence / share-of-voice</td><td>How often you appear in AI answers vs competitors — share of voice, the competitive picture. Moves for reasons outside your stack (a competitor improved) and localizes no operational cause.</td><td><span class="chip none">Out</span></td></tr>
+        </tbody></table>
+
+        <div class="cmphdr">Tier 1 — what Provado checks, split by who detects it (Group A: consume &amp; verify · Group B: durably own)</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Check</th><th>Layer</th><th>What it verifies</th></tr>
+          <tr class="grouprow"><td colspan="3">Group A — platform-provided where configured · consume the platform signal and verify</td></tr>
+          <tr><td class="c1">AI crawlers permitted on product paths</td><td class="c2">L1 · tech-SEO</td><td>robots.txt allows GPTBot, ClaudeBot, OAI-SearchBot, PerplexityBot, Google-Extended on product URLs.</td></tr>
+          <tr><td class="c1">No CDN / WAF user-agent block</td><td class="c2">L1 · tech-SEO</td><td>The anti-scraper rule that silently blocks a good AI bot (the OAI-SearchBot case).</td></tr>
+          <tr><td class="c1">Product URLs reachable &amp; findable</td><td class="c2">L1 · tech-SEO</td><td>200 (not 404 / soft-404), in the sitemap, not orphaned.</td></tr>
+          <tr><td class="c1">AI crawlers actually fetched products</td><td class="c2">L1 · observed</td><td>CDN / WAF logs per user-agent — observed access, not just permitted. <i>(Overlaps Profound's Agent Analytics and Adobe LLM Optimizer's CDN-log bot-error monitoring.)</i></td></tr>
+          <tr><td class="c1">Product content server-rendered, not JS-only</td><td class="c2">L1 · rendering</td><td>Most AI crawlers don't run JS; key fields must be in the raw HTML.</td></tr>
+          <tr><td class="c1">Schema present, valid, matches content</td><td class="c2">L1 · structured data</td><td>name, price, currency, availability, brand, GTIN / MPN — and the markup matches what's visible.</td></tr>
+          <tr><td class="c1"><b>Required structured attributes present</b></td><td class="c2"><b>L2 · product data</b></td><td>GTIN, brand, category, image, key specs — the surface's eligibility bar.</td></tr>
+          <tr><td class="c1"><b>Matchable attributes populated</b></td><td class="c2"><b>L2 · product data</b></td><td>Material, size, compatibility, use-case — what AI matches a query against.</td></tr>
+          <tr><td class="c1"><b>No feed disapprovals; present on agent surface</b></td><td class="c2"><b>L2 · product data</b></td><td>Not silently dropped from the channel; in the MCP feed / Merchant Center AI agents query.</td></tr>
+          <tr class="grouprow"><td colspan="3">Group B — durably Provado · own (no platform substitute)</td></tr>
+          <tr><td class="c1"><b>Price / availability matches source of record</b></td><td class="c2"><b>L0 · product data</b></td><td>The load-bearing check: what AI sees must match the source of record — divergence makes AI recommend wrong info or silently suppress the product. No platform readiness score verifies this against the SoR.</td></tr>
+          <tr><td class="c1"><b>Cross-surface blast radius</b></td><td class="c2"><b>cross-stack</b></td><td>The same fault that suppresses AI usually also hits the Shopping feed, on-site search, and the human page — Provado sizes the full blast radius, not just the AI symptom.</td></tr>
+          <tr><td class="c1"><b>Upstream cause &amp; deploy correlation</b></td><td class="c2"><b>L1 → cause</b></td><td>Tie the eligibility break to the deploy / config / sync change that caused it, and price it. The platform flags the missing attribute; only Provado names what broke it and when.</td></tr>
+        </tbody></table>
+        <p class="dd" style="margin-top:6px">What makes it lightweight: it verifies <b>machine-checkable preconditions against requirements</b> — it never queries the AI engines to read actual answers. That is what keeps it cheap to build and off the measurement vendors' moat.</p>
+        <div class="dfan"><b>Why consume, not build — the same discipline as APM and Merchant Center.</b> The commerce platforms now ship native AI-readiness: Shopify scores catalog completeness for AI and one-click-publishes products to ChatGPT &amp; Gemini; Adobe's Catalog Agent diffs the catalog against the agent-visible page and flags missing attributes; commercetools exposes the catalog to agents through its Commerce MCP (and calls AI discovery commoditizing). When a detecting capability becomes near-universal in the category, Provado <b>consumes</b> its signal rather than rebuilding it — exactly as it does with bundled APM (latency) and Google Merchant Center (disapprovals). But a capability <i>existing</i> is not every mid-market merchant having it <i>configured</i> — so the state is <b>consume where present, thin tripwire where it is not, never Out</b>. The platform stops at the eligibility checkbox; the <b>upstream cause, the source-of-record truth, the cross-surface blast radius, and the price stay always Provado's</b>.</div>
+
+        <div class="cmphdr">Tier 3 — full presence / share-of-voice (Out); Profound as a complementary tool</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Profound</th><th>Coverage</th><th>Note</th></tr>
+          <tr><td class="c1">Presence measurement across 10+ AI engines — share of voice, citations, sentiment, prompt-level tracking, competitor benchmarking; plus AI-content optimization and agent crawler analytics. Enterprise-priced.</td><td class="c2"><span class="chip none">Out</span></td><td>Measures the <b>outcome</b> and creates content; does <b>not</b> diagnose operational cause. <b>Share of voice / competitive presence is Out</b> — it moves for reasons outside the merchant’s stack and localizes no operational cause, so Provado neither builds nor consumes it as enrichment. What Provado <i>does</i> consume is the narrow <b>retrieval/citation-drop</b> trigger where a tool exposes it (“these SKUs stopped being cited”) — the Tier-1/2 eligibility signal, owned thin. Profound remains genuinely complementary as a tool the merchant may run.</td></tr>
+          <tr><td class="c1">Roadmap watch</td><td class="c2"><span class="chip deferred">Validate in discovery</span></td><td>Profound is enterprise-priced; mid-market ICP merchants may run a cheaper tool or none. If discovery shows ICP merchants run <i>no</i> AI-visibility tool, evaluate hardening the <b>narrow retrieval/citation-drop signal</b> (the eligibility tripwire) — <b>not</b> share-of-voice presence measurement, which stays Out, and not content creation (off-thesis, out).</td></tr>
+        </tbody></table>
+
+        <div class="dfan"><b>The honesty boundary — necessary, not sufficient.</b> A product can pass every eligibility check and still not be recommended, because AI ranking also depends on relevance, brand authority, and competitive content — none machine-checkable, none Provado's job. So Provado verifies <b>nothing operational is suppressing visibility</b>, and names the cause when something is; it cannot guarantee a product <i>will</i> be visible. Same discipline as "not us, among what we watch." It is also why Profound is genuinely complementary: it sees the outcome, including the competitive / share-of-voice dimension Provado deliberately leaves <b>Out</b> — it localizes no operational cause, so it fails the detect→trace→price test.</div>
+        <p class="dd" style="margin-top:10px"><span onclick="showDrill('discover')" style="color:#0F766E;font-weight:700;cursor:pointer;text-decoration:underline">← Back to the Discover surface</span></p>
+      </div>
+
+      <div class="drillpanel" id="drill-evaluate">
+        <h2>EVALUATE — diagnosis by layer</h2>
+        <p class="dd">Shoppers who landed aren't choosing the product.</p>
+        <div class="cmphdr">What the merchant feels on Evaluate — and what Provado does with each</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Problem — the merchant's words</th><th>Provado</th><th>What we do — or who owns it</th></tr>
+          <tr class="grouprow"><td colspan="3">Finding on site</td></tr>
+          <tr><td class="c1">"Shoppers search my site and get no results or irrelevant ones — and I never hear about it."</td><td class="c2"><span class="disp part">◐ Partial</span></td><td>Site-search sessions are ~45% of revenue from ~15% of traffic, yet 10–20% of searches return zero results with no alert. Consume the engine's signal where present (Algolia-class), own the upstream trace — bad import, stale index, broken sync, deploy. The engine's ranking/relevance and merchandising design are out (3P / judgment). <span class="xref" onclick="showDrill('search')">Open Search &amp; Merchandising →</span></td></tr>
+          <tr class="grouprow"><td colspan="3">Product experience</td></tr>
+          <tr><td class="c1">"Shoppers bounce off the product page; few add to cart."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Trace to the render / performance fault (L1) or the content/attribute gap (L2) degrading the page, and price it.</td></tr>
+          <tr><td class="c1">"Product images or video don't load or render."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Detect the broken render, trace to the deploy/asset cause, price the engagement loss.</td></tr>
+          <tr><td class="c1">"My pages are slow, especially on mobile."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Consume Core Web Vitals (CrUX) and APM latency — only ~22% of Adobe Commerce sites pass CWV on mobile, where 'Good' scores convert ~24% better — trace the regression to its cause, price it.</td></tr>
+          <tr><td class="c1">"My merchandising or page layout is weak."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Layout and merchandising design are judgment — the merchant's team or an agency. No operational cause to trace.</td></tr>
+          <tr class="grouprow"><td colspan="3">Decision support</td></tr>
+          <tr><td class="c1">"My recommendations aren't showing."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Detect the widget failing to render or call its service, trace to the operational cause; the recommendation intelligence itself is the engine's (3P).</td></tr>
+          <tr><td class="c1">"My recommendations / personalization keep getting worse."</td><td class="c2"><span class="disp part">◐ Partial</span></td><td>The recs intelligence is 3P (Target / Dynamic Yield). But where the cause is incomplete tracking data degrading the model — a loop merchants can't see and blame on 'the algorithm' — the data integrity is ours (L0). <span class="xref" onclick="showDrill('mi')">Open Measurement integrity →</span></td></tr>
+          <tr><td class="c1">"My reviews and ratings don't appear as rich results."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Validate review markup (L2) and schema (L1) per template, trace a break to its deploy, price the lost rich-result clicks.</td></tr>
+          <tr><td class="c1">"Shoppers don't find the product persuasive."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Persuasion and comparison content are judgment/editorial — content team or agency. No operational cause.</td></tr>
+          <tr><td class="c1">"My product copy isn't compelling."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Editorial — content team or agency.</td></tr>
+        </tbody></table>
+        <div class="cmphdr">How a diagnosable problem traces to its cause</div>
+        <div class="trace">
+          <div class="trow"><div class="tl" style="background:#0F766E"><span class="ln">LAYER 3 · surface</span><span class="lt">Evaluate</span></div><div class="tm"><div class="gl">Symptom the merchant feels</div><div class="chips"><span class="chip symptom">High PDP bounce</span><span class="chip symptom">Low add-to-cart</span></div></div><div class="tr"><span class="rt">Detect &amp; quantify</span><span class="rd">Measures the consideration drop and revenue at risk.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#1E3A5F"><span class="ln">LAYER 2 · capability</span><span class="lt">Content · recs · catalog</span></div><div class="tm"><div class="gl">Is a capability the culprit?</div><div class="chips"><span class="chip own">Attribute / image completeness</span><span class="chip own">Recommendations firing</span><span class="chip own">CMS-served content</span></div></div><div class="tr"><span class="rt">Diagnose capability fault</span><span class="rd">Checks whether product data, recs, or content are degrading the page.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#283593"><span class="ln">LAYER 1 · technical</span><span class="lt">Rendering · performance</span></div><div class="tm"><div class="gl">Technical root cause — Provado's depth</div><div class="chips"><span class="chip own">PDP image / video render</span><span class="chip consume">JavaScript errors</span><span class="chip consume">Page performance</span></div></div><div class="tr"><span class="rt">Instrument &amp; root-cause</span><span class="rd">Finds the render or performance fault breaking the page experience.</span></div></div>
+          <div class="tarrow">↓ validated on</div>
+          <div class="trow"><div class="tl" style="background:#57534E"><span class="ln">LAYER 0 · data</span><span class="lt">Data layer</span></div><div class="tm"><div class="gl">Is the measurement trustworthy?</div><div class="chips"><span class="chip own">PDP engagement tracking</span></div></div><div class="tr"><span class="rt">Validate &amp; anchor</span><span class="rd">Confirms the engagement drop is real, not a tracking artifact.</span></div></div>
+        </div>
+        <div class="dfan"><b>Fan-out:</b> <code>rendering</code> and <code>performance</code> here are the same components that surface in Convert and Discover — one fault, three symptoms.</div>
+      </div>
+
+      <div class="drillpanel" id="drill-convert">
+        <h2>CONVERT — diagnosis by layer</h2>
+        <p class="dd">Shoppers who decided aren't completing the purchase.</p>
+        <div class="cmphdr">What the merchant feels on Convert — and what Provado does with each</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Problem — the merchant's words</th><th>Provado</th><th>What we do — or who owns it</th></tr>
+          <tr class="grouprow"><td colspan="3">Checkout</td></tr>
+          <tr><td class="c1">"Cart / checkout abandonment is high."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Read the checkout flow config (L2) and the render / latency / deploy stack (L1) — 13% of abandonment is a pure technical 'site had errors' category — trace and price.</td></tr>
+          <tr><td class="c1">"Mobile conversion is low."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Mobile converts at ~half of desktop, driven by technical faults not UX. Trace the mobile render / performance cause, price the gap.</td></tr>
+          <tr><td class="c1">"Checkout threw errors or the site crashed mid-purchase — and 96% of shoppers never report it, they just leave."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Catch the checkout error (orchestration L2 + JS errors L1), trace to the deploy/config, price the silent loss.</td></tr>
+          <tr><td class="c1">"Shoppers drop off at the payment step."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>Consume PSP telemetry (decline reasons, method availability), trace a config-caused drop, price it.</td></tr>
+          <tr><td class="c1">"A payment method stopped working or declines spiked."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>PSP telemetry as the symptom; trace to the 3DS misconfig, toggled method, or expired key behind it.</td></tr>
+          <tr><td class="c1">"Legitimate customers are being falsely declined — and I can't see why."</td><td class="c2"><span class="disp part">◐ Partial</span></td><td>82% of retailers can't identify the cause of failed payments. Surface the decline telemetry, trace config-caused declines, quantify the loss ($81B lost to false declines in 2023). The risk model's false-positive <i>decision</i> is the PSP's (Stripe / Signifyd adaptive acceptance) — 3P.</td></tr>
+          <tr><td class="c1">"A promo or discount isn't applying at checkout."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>The rule's effect is traced in Pricing &amp; Promotions. <span class="xref" onclick="showDrill('price')">Open Pricing &amp; Promotions →</span></td></tr>
+          <tr><td class="c1">"Tax or duty comes out wrong in some regions, breaking checkout there."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>The per-region config fault is traced in Internationalization. <span class="xref" onclick="showDrill('i18n')">Open Internationalization →</span></td></tr>
+          <tr><td class="c1">"I want to A/B test or redesign checkout to lift conversion."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Experimentation and design — a CRO agency / testing tool. (The average large site has 39 checkout improvement areas — real, but not our job.)</td></tr>
+          <tr><td class="c1">"AI agents completing the checkout themselves."</td><td class="c2"><span class="disp def">⏸ Deferred</span></td><td>Agentic checkout (ACP, delegated payment) is live but thin in mid-market; payment plumbing, PSP-adjacent. Read the outcome, never process.</td></tr>
+          <tr class="grouprow"><td colspan="3">Measurement — cross-cutting, surfaces most sharply here</td></tr>
+          <tr><td class="c1">"I don't trust my numbers — my reported revenue doesn't match reality."</td><td class="c2"><span class="disp diag">✓ Diagnose</span></td><td>20–30% of purchases can go untracked in analytics. Anchor on the server-side order record (~99% accurate), quantify the gap, trace the undercount to its cause — a broken tag, consent suppression, a deploy. This pain spans every surface; it bites hardest where revenue is counted.</td></tr>
+        </tbody></table>
+        <div class="cmphdr">How a diagnosable problem traces to its cause</div>
+        <div class="trace">
+          <div class="trow"><div class="tl" style="background:#0F766E"><span class="ln">LAYER 3 · surface</span><span class="lt">Convert</span></div><div class="tm"><div class="gl">Symptom the merchant feels</div><div class="chips"><span class="chip symptom">Cart / checkout abandonment</span><span class="chip symptom">Low mobile conversion</span><span class="chip symptom">Payment step drop-off</span></div></div><div class="tr"><span class="rt">Detect &amp; quantify</span><span class="rd">Measures the conversion gap and attaches the revenue number.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#1E3A5F"><span class="ln">LAYER 2 · capability</span><span class="lt">Cart, checkout &amp; payments</span></div><div class="tm"><div class="gl">Is a capability the culprit?</div><div class="chips"><span class="chip own">Checkout orchestration</span><span class="chip consume">Payment / gateway config</span></div></div><div class="tr"><span class="rt">Diagnose capability fault</span><span class="rd">Reads the checkout/payment stack to see if it starts the leak.</span></div></div>
+          <div class="tarrow">↓ traced to</div>
+          <div class="trow"><div class="tl" style="background:#283593"><span class="ln">LAYER 1 · technical</span><span class="lt">Rendering · performance · release</span></div><div class="tm"><div class="gl">Technical root cause — Provado's depth</div><div class="chips"><span class="chip own">Checkout render / hydration</span><span class="chip consume">JavaScript errors</span><span class="chip consume">Page / API latency</span><span class="chip own">Deploy / release regression</span></div></div><div class="tr"><span class="rt">Instrument &amp; root-cause</span><span class="rd">Pinpoints the broken render, error, or bad deploy behind the drop.</span></div></div>
+          <div class="tarrow">↓ validated on</div>
+          <div class="trow"><div class="tl" style="background:#57534E"><span class="ln">LAYER 0 · data</span><span class="lt">Data layer</span></div><div class="tm"><div class="gl">Is the measurement trustworthy?</div><div class="chips"><span class="chip anchor">Order / revenue record</span><span class="chip own">Checkout funnel tracking</span></div></div><div class="tr"><span class="rt">Validate &amp; anchor</span><span class="rd">Confirms the conversion number is real before pricing the leak.</span></div></div>
+        </div>
+        <div class="dfan"><b>Fan-out:</b> <code>render</code>, <code>JS errors</code>, and <code>latency</code> here are shared with the Discover and Evaluate drills.</div>
+      </div>
+
+      <div class="drillpanel" id="drill-retain">
+        <h2>RETAIN — the boundary</h2>
+        <p class="dd">Included to show where coverage stops: Provado diagnoses the leak that prevents the sale, not the customer lifecycle after it. Lifecycle, loyalty, OMS, and service are owned by CRM/OMS/service platforms. The one touchpoint: Provado <b>anchors</b> on the order record and customer master data — it reads them as ground truth but does not diagnose retention.</p>
+        <div class="cmphdr">What the merchant feels post-purchase — and why it's (mostly) out</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Problem — the merchant's words</th><th>Provado</th><th>What we do — or who owns it</th></tr>
+          <tr><td class="c1">"Customers don't come back; churn is high."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Lifecycle &amp; retention — CRM / CDP / lifecycle-marketing platforms.</td></tr>
+          <tr><td class="c1">"My returns are high."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Returns operations — OMS / returns platform. <i>One exception below.</i></td></tr>
+          <tr><td class="c1">"Returns are high because products didn't match the listing — wrong specs or attributes."</td><td class="c2"><span class="disp part">◐ Partial</span></td><td>The return is post-purchase (out), but the <i>cause</i> — inaccurate product data propagated to channels — is ours: ~31% of returns trace to misdescribed items (~$276B/yr). We diagnose and price the data fault at L2/L0; the returns process stays the OMS's. <span class="xref" onclick="showDrill('cat')">Open Product &amp; Catalog →</span></td></tr>
+          <tr><td class="c1">"Order management or fulfillment is failing."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>OMS / ERP / 3PL.</td></tr>
+          <tr><td class="c1">"My loyalty or subscriptions underperform."</td><td class="c2"><span class="disp out">⊘ Out</span></td><td>Loyalty / subscription platforms.</td></tr>
+        </tbody></table>
+        <div class="dfan"><b>Why list pains we don't solve?</b> Because showing the boundary honestly is the point — the merchant sees exactly where Provado stops and who to call instead. The one in-scope thread is the returns-from-bad-data row: the symptom is post-purchase, but the cause is ours.</div>
+      </div>
+    </div>
+
+    <!-- LAYER 2 — CAPABILITIES -->
+    <div class="layer">
+      <div class="rail" style="background:#1E3A5F">
+        <div class="ln">LAYER 2</div><div class="lt">Commerce capabilities (PBCs)</div>
+        <div class="ld">The capabilities that power the surfaces. Provado reads each one's own signals to ask: does the leak start here, or is a deeper fault passing through? Click any box.</div>
+      </div>
+      <div class="body">
+        <div class="dom clickable" id="surf-cat" onclick="showDrill(&#39;cat&#39;)"><h3>PRODUCT &amp; CATALOG (PIM) <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Product data / attributes</span><span class="chip own">Catalog structure</span><span class="chip own">Sync failures</span><span class="chip consume">Disapprovals</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> Merchant Center / feed status · PIM-vs-feed diffs · attribute scans</div><span class="agent feed">FEED AGENT</span></div></div>
+        <div class="dom clickable" id="surf-search" onclick="showDrill(&#39;search&#39;)"><h3>SEARCH &amp; MERCHANDISING <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip consume">On-site search</span><span class="chip consume">Navigation &amp; faceting</span><span class="chip none">Merchandising rules</span></div></div><div class="feeds">↑ feeds: <span>Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> search-tool API (no-results, freshness) · index status · query logs — <i>coverage is engine-dependent</i></div><span class="agent comm">COMMERCE AGENT*</span></div></div>
+        <div class="dom clickable" id="surf-price" onclick="showDrill(&#39;price&#39;)"><h3>PRICING &amp; PROMOTIONS <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Price accuracy / sync</span><span class="chip own">Promo configuration</span><span class="chip none">Pricing &amp; promo strategy</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> price index state · platform-vs-feed diffs</div><span class="agent comm">COMMERCE AGENT*</span></div></div>
+        <div class="dom clickable" id="surf-checkout" onclick="showDrill(&#39;checkout&#39;)"><h3>CART, CHECKOUT &amp; PAYMENTS <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Checkout orchestration</span><span class="chip consume">Payment / gateway config</span><span class="chip tp">Payment processing / fraud</span></div></div><div class="feeds">↑ feeds: <span>Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> gateway telemetry · checkout API metrics · funnel events</div><span class="agent comm">COMMERCE AGENT*</span></div></div>
+        <div class="dom clickable" id="surf-content" onclick="showDrill(&#39;content&#39;)"><h3>CONTENT &amp; RECOMMENDATIONS <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">CMS content serving</span><span class="chip own">Recs widget render &amp; firing</span><span class="chip tp">Recs / personalization engine</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> CMS API / content-serving checks · recs-widget render state</div><span class="agent comm">COMMERCE AGENT*</span></div></div>
+        <div class="dom clickable" id="surf-agentic" onclick="showDrill(&#39;agentic&#39;)"><h3>AGENTIC PROTOCOLS <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Agent discovery readiness</span><span class="chip deferred">Agentic checkout</span><span class="chip deferred">Protocol-drift watch</span></div></div><div class="feeds">↑ feeds: <span>Discover · Convert</span> · = Agent Readiness</div><div class="meta"><div class="telem"><b>TELEMETRY:</b> agent-feed &amp; endpoint probes (discovery readiness) · checkout &amp; protocol-compliance checks deferred</div><span class="agent tseo">TECH-SEO / PROTOCOL AGENT</span></div></div>
+        <div class="dom clickable" id="surf-i18n" onclick="showDrill(&#39;i18n&#39;)"><h3>INTERNATIONALIZATION <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Multi-currency</span><span class="chip own">Geo tax / duty</span><span class="chip tp">Tax engine</span><span class="chip none">Localized catalog / language</span></div></div><div class="feeds">↑ feeds: <span>all surfaces</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> currency/tax config reads · per-locale feed status</div><span class="agent comm">COMMERCE AGENT*</span></div></div>
+        <div class="dom cond"><h3>B2B CAPABILITIES</h3><div class="grp"><div class="chips"><span class="chip deferred">Quoting</span><span class="chip deferred">Contract pricing</span><span class="chip deferred">Punchout</span></div></div><div class="feeds">conditional — only if B2B enters the ICP</div><div class="meta"><div class="telem"><b>TELEMETRY:</b> — pending ICP decision</div></div></div>
+      </div>
+    </div>
+
+    <!-- LAYER 2 DRILLS -->
+    <div class="drillzone">
+      <div class="drillhint" id="hint-l2">↑ Click a capability to see its components, what Provado does, and what's deliberately left to a third party.</div>
+
+      <div class="drillpanel" id="drill-cat">
+        <h2>PRODUCT &amp; CATALOG (PIM) — expanded</h2>
+        <p class="dd">Provado does two jobs here. First it <b>validates</b> — checks the product data against a known standard: are the required fields present, do the copies across systems agree, does the product clear each channel's bar to appear. Then, when a check fails, it <b>diagnoses</b> — traces the failure to the operational event that caused it and prices the impact. It does <b>not</b> write content, decide which system is authoritative, or design the catalog structure — those are creation and judgment, not checking. The line: if an activity is a fact checked against a requirement, it's Provado's; if it needs creating or judging, it's someone else's.</p>
+
+        <div class="cmphdr">The product-data lifecycle — everything that can be done with the data, who does it, and where Provado sits</div>
+        <table class="cmp">
+          <tbody><tr><th>Activity</th><th>Who does it well</th><th>Provado?</th></tr>
+          <tr><td class="task">Model / structure — schema, taxonomy, product types</td><td>PIM + commerce architects (Akeneo, Salsify, inriver, Adobe)</td><td class="no">No — designing the model is architecture</td></tr>
+          <tr><td class="task">Master / govern — the one authoritative copy</td><td>PIM / MDM</td><td class="no">No — anchors on it as L0 truth, doesn't set it</td></tr>
+          <tr><td class="task">Author / enrich — incl. rich product content for AI</td><td>Content teams, agencies, AI-copy tools, PIM enrichment</td><td class="no">No — writes nothing</td></tr>
+          <tr><td class="task">Optimize for discovery — GEO/AEO content, feed optimization</td><td>SEO/GEO agencies, feed-optimization tools</td><td class="no">No — optimization is creation + judgment</td></tr>
+          <tr><td class="task">Syndicate / publish — to site, search, feeds, marketplaces, agent surfaces</td><td>Feed-management platforms (Feedonomics-class), platform export</td><td class="no">No on managing distribution — diagnoses why a published copy broke</td></tr>
+          <tr><td class="task">Validate / monitor — completeness, consistency, eligibility, freshness</td><td>Partial in some PIMs/feed tools; rarely continuous and cross-system</td><td class="yes">Yes — owned slice</td></tr>
+          <tr><td class="task">Diagnose / price — when a check fails, trace it down the layers (capability → technical → data) to the operational event behind it — the failed job, the bad deploy, the stale index — and price the impact against the real order record. When something is simply wrong with no event behind it (an attribute that was never filled in), flag and price it anyway. <b>Causation is the edge, not the gate.</b></td><td>Nobody, cross-stack and commerce-native</td><td class="yes">Yes — core, unique</td></tr>
+          <tr><td class="task">Remediate — edit the attribute, re-run the sync, fix the mapping</td><td>SI, internal team, PIM admin</td><td>Not at MVP (read-only); per-finding fixes are later-scope</td></tr>
+        </tbody></table>
+
+        <div class="cmphdr">The validate + diagnose rows, detailed — what Provado owns inside the capability</div>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Attribute completeness &amp; eligibility</td><td class="c2"><span class="chip own">Own</span></td><td>Scans the catalog against channel + AI requirements (GTIN, brand, category, the structured attributes AI matches on); missing required attributes = suppressed eligibility, priced. Checks presence against a requirement — never judges the editorial <i>quality</i> of copy.</td></tr>
+          <tr><td class="c1">Catalog structure integrity</td><td class="c2"><span class="chip own">Own</span></td><td>Detects broken category trees, orphaned SKUs, mapping faults after imports/changes. Integrity (broken-ness), not taxonomy design.</td></tr>
+          <tr><td class="c1">Feed disapprovals (Google Merchant Center)</td><td class="c2"><span class="chip consume">Consume &amp; trace</span></td><td>Merchant Center surfaces the disapproval itself; Provado <b>consumes</b> that signal and owns the trace to the upstream cause — which attribute, which sync, which deploy broke it. We don't rebuild disapproval detection the merchant already has in the Merchant Center dashboard.</td></tr>
+          <tr><td class="c1">Inventory &amp; feed sync failures / PIM-vs-feed divergence</td><td class="c2"><span class="chip own">Own</span></td><td>No near-universal tool tells a merchant a sync job silently dropped 800 SKUs or that PIM and the feed have diverged. Provado detects it by diffing the source of record against the feed, then traces the job/mapping cause (the 800-SKU example).</td></tr>
+          <tr><td class="c1">Product presence on agent / AI surfaces (MCP feed, Merchant Center)</td><td class="c2"><span class="chip own">Own</span> / <span class="chip consume">Consume &amp; trace</span></td><td>For each sellable product, checks one of four states on the surfaces AI agents read: <b>present-and-matching</b> (fine), <b>missing</b> (in your catalog but absent from the surface — invisible to AI shopping), <b>disapproved</b> (present but flagged, so it doesn't show), or <b>diverged</b> (surface says out-of-stock while your system says in-stock → the agent re-verifies and silently drops it). <b>Disapproved</b> is <b>consumed</b> from Merchant Center (we ingest the flag, own the trace); <b>missing</b> and <b>diverged</b> are <b>own</b> detection (catalog-vs-surface and stock-vs-surface diffs nobody else runs). Merchant Center is concrete and checkable today; the MCP / agent-feed half is the leading edge, firming up as protocols settle. (Protocol <i>compliance</i> itself lives in the Agentic Protocols box, deferred.)</td></tr>
+          <tr><td class="c1">Feed management &amp; optimization platform</td><td class="c2"><span class="chip tp">3P covers</span></td><td>Feed platforms (e.g. Feedonomics-class) manage/optimize what gets published. Provado diagnoses why upstream data breaks what they distribute — partner, don't rebuild.</td></tr>
+          <tr><td class="c1">Authoring / enrichment / GEO content</td><td class="c2"><span class="chip none">Out</span></td><td>Writing and optimizing product content — including rich content for AI — is content-team / PIM-enrichment / agency territory. No operational cause to trace.</td></tr>
+        </tbody></table>
+
+        <p class="dd" style="margin-top:12px">↗ These attribute, feed, and agent-surface checks are the Layer-2 inputs to the <b>AI-visibility diagnosis assembled at the Discover surface</b>, where the full story lives. <span onclick="showDrill('aivis')" style="color:#0F766E;font-weight:700;cursor:pointer;text-decoration:underline">Open the AI-visibility drill →</span></p>
+      </div>
+
+      <div class="drillpanel" id="drill-search">
+        <h2>SEARCH &amp; MERCHANDISING — expanded</h2>
+        <p class="dd">Coverage here turns on <b>which search engine the merchant runs</b> — an adoption fact we have not yet measured across the ICP (Needs Validation Backlog: search-engine distribution). The durable edge is the <b>trace upstream</b>, which is ours regardless of engine; the <b>detection</b> of search faults is only a gap to fill where the engine doesn't already surface it.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Search-fault detection — stale index, failed reindex, zero-results, degraded relevance, broken facets / navigation</td><td class="c2"><span class="chip consume">Consume &amp; trace</span> / <span class="chip own">Own*</span></td><td><b>Engine-dependent.</b> Where the merchant runs <b>Algolia-class</b> search (ships no-results analytics, per-record freshness, failed-reindex detection, indexing logs), Provado <b>consumes</b> that signal as the symptom — rebuilding detection everyone already has is a false distinction. Where the merchant runs <b>Adobe Live Search</b> (thin analytics) or <b>native Magento / Elasticsearch</b> (no product-grade no-results analytics), detection is a real gap Provado <b>may build</b> (*the lightweight-symptom-signal pattern). Which case dominates is a per-ICP adoption question for discovery.</td></tr>
+          <tr><td class="c1">Cross-stack trace — search symptom → upstream operational cause (bad import, stale platform index, broken sync, deploy)</td><td class="c2"><span class="chip own">Own</span></td><td>The differentiated work, independent of engine. Today this trace happens manually — an engineer or the SI correlates the search symptom to the upstream event by hand, slowly, across teams. Provado does it automatically and prices it. The competitor here is engineer-hours, not the search tool.</td></tr>
+          <tr><td class="c1">Search engine itself (ranking, synonyms, AI relevance)</td><td class="c2"><span class="chip tp">3P covers</span></td><td>Algolia / Live Search / Bloomreach own the engine. Provado restores the clean data and index they depend on.</td></tr>
+          <tr><td class="c1">Merchandising rules &amp; strategy (incl. facet / navigation design)</td><td class="c2"><span class="chip none">Out</span></td><td>Business judgment, not operational causation.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-price">
+        <h2>PRICING &amp; PROMOTIONS — expanded</h2>
+        <p class="dd">What price and discount the shopper actually sees. Provado checks two things and judges neither: whether the price is <b>accurate</b> across the stack, and whether a promotion <b>applies</b> as configured. Choosing what to charge or discount is the merchant's call (Out); detecting that a price drifted or a rule silently stopped firing — and tracing it to the change behind it — is Provado's.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Price accuracy &amp; sync</td><td class="c2"><span class="chip own">Own</span></td><td>Detects price divergence across platform / ERP / on-site / agent surfaces where no tool watches it, and traces to the index/sync cause (stale-price cron example). The one slice a tool already surfaces — feed-vs-landing-page price mismatch — is a Merchant Center <b>disapproval</b>, consumed via the Product &amp; Catalog disapprovals cell; not rebuilt here.</td></tr>
+          <tr><td class="c1">Promo configuration faults</td><td class="c2"><span class="chip own">Own</span></td><td>A cart/price rule silently not applying as scoped (wrong priority/stacking, scope or date misconfig, a deploy). Adobe ships recurring quality patches for "rule doesn't apply as intended," and the admin shows a rule is <i>active</i>, not that it stopped <i>applying</i> — no tool watches rule <i>effect</i>. Detection is tripwire-grade (baseline a rule's normal application, flag a step-change in applied-discount behaviour); the trace + price are the always-Own work. Not promo design.</td></tr>
+          <tr><td class="c1">Pricing &amp; promotion strategy (incl. dynamic-pricing / repricing logic)</td><td class="c2"><span class="chip none">Out</span></td><td>Business judgment — what to charge, what to discount. Repricing-engine logic is a 3P/judgment capability; Provado reads the price it outputs (an input to divergence detection), never decides it.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-checkout">
+        <h2>CART, CHECKOUT &amp; PAYMENTS — expanded</h2>
+        <p class="dd">The capability that completes the sale. Provado reads the checkout flow's own config and the PSP's telemetry to judge whether a leak <b>starts here</b> or is a deeper render / latency fault passing through on its way to the drop-off. It diagnoses and prices the leak; it never processes a payment or touches the money — PSPs and fraud platforms own that.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Checkout orchestration config</td><td class="c2"><span class="chip own">Own</span></td><td>The mid-chain capability check: did a checkout step/flow config silently break (a method or shipping/tax call failing, a step erroring) — no tool watches that. The checkout <i>symptoms</i> (JS errors, latency, step drop-off) are consumed via Rendering, Performance and the L0 order-vs-funnel anchor — referenced, not rebuilt. Trace + price always Own.</td></tr>
+          <tr><td class="c1">Payment gateway config &amp; health</td><td class="c2"><span class="chip consume">Consume &amp; trace</span></td><td>Every merchant runs a PSP (payment service provider — Stripe / Adyen / Braintree-class), and PSPs already surface decline reasons, auth rates, method availability and 3DS errors. Consume that as the symptom; own the trace to the config cause (a 3DS misconfig, a method toggled off, an expired key after a deploy) and the price. The signal is near-universal; per-PSP integration breadth is a feasibility item, not an adoption one.</td></tr>
+          <tr><td class="c1">Payment processing / fraud ops</td><td class="c2"><span class="chip tp">3P covers</span></td><td>PSPs and fraud platforms (Adyen/Stripe/Signifyd-class) own processing and fraud decisions. Provado reads outcomes, never processes.</td></tr>
+          <tr><td class="c1">CRO / A-B testing / checkout design</td><td class="c2"><span class="chip none">Out</span></td><td>Experimentation and design are agency/tool territory.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-content">
+        <h2>CONTENT &amp; RECOMMENDATIONS — expanded</h2>
+        <p class="dd">Merchandised content and product recommendations — the operational slice only. Provado checks that a CMS block actually serves and a recs widget actually fires and returns items; <b>what</b> to recommend or write is the engine's and the content team's job (3P / Out). A block that silently goes blank still "works" to every other tool — Provado catches it and traces it to the change behind it.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">CMS content serving</td><td class="c2"><span class="chip own">Own</span></td><td>Capability check: does the CMS API return the block and is it published/referenced where the page expects it. No tool watches a specific block silently going blank. The <i>render</i> of it is L1 Rendering (consumed/tripwire) — referenced, not rebuilt. Trace + price always Own.</td></tr>
+          <tr><td class="c1">Recs widget render &amp; firing</td><td class="c2"><span class="chip own">Own</span></td><td>The operational slice of recommendations: was the recs service called, did it return items, did the widget mount — distinct from the algorithm itself (below). Same mechanism as a CMS block failing; render symptom consumed via Rendering. Detects the failure; does not judge the recommendation.</td></tr>
+          <tr><td class="c1">Recommendation algorithm / personalization</td><td class="c2"><span class="chip tp">3P covers</span></td><td>Adobe Target / Dynamic Yield-class tools own the intelligence. Provado diagnoses why their widget broke, not what it should recommend.</td></tr>
+          <tr><td class="c1">Content quality &amp; copywriting</td><td class="c2"><span class="chip none">Out</span></td><td>Agency/content-team territory; no operational cause to trace.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-agentic">
+        <h2>AGENTIC PROTOCOLS — expanded</h2>
+        <p class="dd">Three different jobs, not one — split by how ready each is. <b>(1) Discovery readiness — Own, built thin (now).</b> Making sure AI shopping agents and crawlers can find, reach and correctly read your products. Most of this already lives on the map and is <b>reused here, not rebuilt</b>: feed presence / disapprovals / stock-vs-price divergence in <b>Product &amp; Catalog</b>, and crawler access (robots, WAF block, server-rendered content, did-they-fetch) in <b>Technical SEO</b>, <b>Rendering</b> and the Tier-1 eligibility checks. Only two pieces are new: whether the agent/MCP data endpoint is live, authenticated and serving current data; and whether product fields meet the agents’ own feed spec (which differs from Merchant Center’s). <b>(2) Agentic checkout — Deferred.</b> An agent paying and checking out on your site (ACP endpoints, delegated payment, AP2 mandates) is payment plumbing with thin mid-market adoption — Provado reads the outcome, never processes the transaction. <b>(3) Protocol-drift watch — white space, validate first.</b> These specs change every few weeks (ACP shipped 5+ revisions in under a year) and no one watches whether a merchant’s integration still complies as they move — promising, but confirm merchants have agent traffic worth protecting before building. Read-only throughout.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Agent-channel discovery readiness</td><td class="c2"><span class="chip own">Own</span></td><td>Can AI agents / crawlers find, reach and correctly read your products. <b>Reuses existing cells</b> (no rebuild): feed presence / disapprovals / stock-vs-price divergence (Product &amp; Catalog); crawler access — robots, WAF block, server-rendered content, fetch-observed (Technical SEO, Rendering, Tier-1 eligibility). <b>New here:</b> (a) the agent / MCP endpoint is reachable, authenticated and returning current data; (b) product fields meet the agents’ own feed spec (title, price + currency, availability, images, eligibility), which differs from Merchant Center’s. Built thin; depth gated on discovery confirming real agent traffic.</td></tr>
+          <tr><td class="c1">Agentic checkout (ACP endpoints, delegated payment, AP2 mandates)</td><td class="c2"><span class="chip deferred">Deferred</span></td><td>Payment / transaction plumbing with thin mid-market adoption, PSP- and platform-adjacent. Provado reads the outcome, never processes the transaction.</td></tr>
+          <tr><td class="c1">Protocol-drift watch (does the integration still meet current spec?)</td><td class="c2"><span class="chip deferred">White space — validate</span></td><td>Specs churn every few weeks (ACP: 5+ revisions in under a year); no third party monitors whether a merchant’s integration still complies as they move. Specified at the capability level so it survives churn. Promising — validate adoption before committing. (Agent-surface data freshness — agent re-verifies stock/price, divergence = suppression — is already covered by the stock-vs-price divergence cell in Product &amp; Catalog.)</td></tr>
+          <tr><td class="c1">Serving content · operating the WAF / edge</td><td class="c2"><span class="chip none">Out</span></td><td>Not Provado’s to do. <b>Serving</b> bot-optimized content is a third-party capability (Scrunch / agencies). <b>Operating</b> the WAF / CDN edge belongs to the platform — on ACC that’s Adobe-run Fastly. Provado reads the logs and detects the harm of a bad rule, but never serves or operates. Read-only.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-i18n">
+        <h2>INTERNATIONALIZATION — expanded</h2>
+        <p class="dd">Running the store across currencies, regions and languages. Provado diagnoses the <b>operational</b> faults — a wrong or stale price in a region, a tax / duty config that breaks checkout in one market — and traces them to the change behind them. Tax <i>calculation</i> is the engine's job (3P); translation and FX-markup choices are judgment (Out). Whether this box matters at all turns on how much of the ICP sells cross-border — an open adoption question.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Multi-currency config &amp; sync</td><td class="c2"><span class="chip own">Own</span></td><td>The per-locale instance of price accuracy — a wrong/stale currency price in a region, a conversion-config break, per-locale divergence. Same mechanism as the Pricing &amp; Promotions price-accuracy cell (referenced, not a separate build). Choosing FX markups is judgment (Out). Trace + price always Own.</td></tr>
+          <tr><td class="c1">Geo tax / duty configuration</td><td class="c2"><span class="chip own">Own</span></td><td>Localises a config fault — a region's tax/duty config broke after a change and breaks checkout there. Surfaces as a region-specific checkout failure (Cart/Checkout box symptom), traced here to the per-region config. Tax <i>calculation</i> itself is the engine's job (below).</td></tr>
+          <tr><td class="c1">Tax engines (calculation)</td><td class="c2"><span class="chip tp">3P covers</span></td><td>Avalara/Vertex-class engines own calculation; Provado reads outcomes and correlates failures.</td></tr>
+          <tr><td class="c1">Localized catalog &amp; language</td><td class="c2"><span class="chip none">Out</span></td><td>Translation/localization is content territory (hreflang mechanics live in Layer 1).</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- LAYER 1 — TECHNICAL -->
+    <div class="layer">
+      <div class="rail" style="background:#283593">
+        <div class="ln">LAYER 1</div><div class="lt">Technical foundation</div>
+        <div class="ld">The stack it all runs on. Where most silent operational causes live — and Provado's depth. Click any box.</div>
+      </div>
+      <div class="body">
+        <div class="dom clickable" id="surf-render" onclick="showDrill(&#39;render&#39;)"><h3>RENDERING &amp; FRONT-END <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">SSR / SSG / hydration</span><span class="chip consume">JavaScript execution</span><span class="chip own">Render-blocking resources</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> rendered-vs-raw HTML fetches · Sentry error ingest · lightweight JS-error tripwire · RUM</div><span class="agent infra">INFRA AGENT</span></div></div>
+        <div class="dom clickable" id="surf-perf" onclick="showDrill(&#39;perf&#39;)"><h3>PERFORMANCE <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip consume">Core Web Vitals</span><span class="chip consume">Page / API latency</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> CWV: CrUX field data (near-universal, install-nothing) + RUM where separately run · latency: server APM (New Relic bundled on ACC; Datadog-class otherwise)</div><span class="agent infra">INFRA AGENT</span></div></div>
+        <div class="dom clickable" id="surf-tseo" onclick="showDrill(&#39;tseo&#39;)"><h3>TECHNICAL SEO &amp; STRUCTURED DATA <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Schema.org / structured data</span><span class="chip own">robots.txt / sitemaps</span><span class="chip own">Canonicals / hreflang</span><span class="chip own">Bot &amp; crawler management</span></div></div><div class="feeds">↑ feeds: <span>Discover · Evaluate</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> scheduled crawls + schema validation · CDN/WAF crawler logs per user-agent · Search Console</div><span class="agent tseo">TECH-SEO / SD AGENT</span></div></div>
+        <div class="dom clickable" id="surf-plat" onclick="showDrill(&#39;plat&#39;)"><h3>PLATFORM &amp; INTEGRATION <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Adobe Commerce config</span><span class="chip own">APIs / integration sync</span><span class="chip own">PIM / ERP / OMS integrations</span><span class="chip own">Tag management</span></div></div><div class="feeds">↑ feeds: <span>Evaluate · Convert</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> ACC config/API · cron &amp; indexer status · integration job logs · GTM container API</div><span class="agent infra">INFRA AGENT</span></div></div>
+        <div class="dom clickable" id="surf-rel" onclick="showDrill(&#39;rel&#39;)"><h3>INFRA &amp; RELEASE <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Deploy / release events</span><span class="chip own">Hosting / CDN</span><span class="chip own">Caching / edge config</span></div></div><div class="feeds">↑ feeds: <span>all surfaces</span></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> deploy webhooks / CI logs · code repos · Fastly/CDN state (ACC: Adobe-operated) · app logs</div><span class="agent infra">INFRA AGENT</span></div></div>
+      </div>
+    </div>
+
+    <!-- LAYER 1 DRILLS -->
+    <div class="drillzone">
+      <div class="drillhint" id="hint-l1">↑ Click a technical domain to see its components — including what's feasible but deliberately left to a third party.</div>
+
+      <div class="drillpanel" id="drill-render">
+        <h2>RENDERING &amp; FRONT-END — expanded</h2>
+        <p class="dd">Every tool on this surface watches the browser and stops there — none sees the backend cause. So detection here is <b>consumed</b> where a tool is near-universal (Sentry for JS errors) or carried as a <b>thin tripwire</b> where it isn’t; the cross-stack trace to the operational root and the dollar price are <b>always Provado’s</b>. Provado builds no session replay, heatmaps, or error-analytics product — that depth is third-party ground it consumes, never rebuilds.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">SSR / SSG / hydration state</td><td class="c2"><span class="chip own">Own</span></td><td>Rendered-vs-raw diff per template; detects a deploy switching render mode (the "GPTBot sees an empty page" case).</td></tr>
+          <tr><td class="c1">JS / front-end error capture</td><td class="c2"><span class="chip consume">Consume &amp; trace</span> <span class="chip own">Own*</span></td><td><b>Consume Sentry</b> (≈85% of the ICP per estimate — <i>to confirm in discovery</i>) for its stack traces and error IDs; <b>Own a thin tripwire</b> where no error tool is present, so a symptom always exists to trigger diagnosis. Deliberately minimal — not an analytics product. <b>Noibu</b> is the closest mechanism-competitor (revenue-ranked front-end errors, built for this band): consume it where the merchant runs it. What Sentry and Noibu surface is the browser symptom; tracing it down to the Magento / ERP / feed cause is done by engineers and the SI today — manually and slowly — and the automatic cross-stack trace + price is always Provado’s. <span style="color:#0F766E">*consume/own branch resolves on the ICP error-tool adoption discovery question.</span></td></tr>
+          <tr><td class="c1">Render-blocking resources</td><td class="c2"><span class="chip own">Own</span></td><td>CSS / JS the browser must download and execute <i>before</i> it can paint the page — until they finish, the shopper sees nothing. A new render-blocking asset (an un-deferred third-party script, a heavy stylesheet in the head) usually ships in a deploy. Provado detects which assets block first paint and ties a new blocker to the deploy that introduced it.</td></tr>
+          <tr><td class="c1">Error grouping · segmentation · reproduction · session replay · heatmaps · behavioral analytics</td><td class="c2"><span class="chip tp">3P covers</span></td><td>The depth above a raw error or session — grouping identical errors with counts, segmenting by device / browser, reproduction breadcrumbs, third-party-script conflict detection, plus full session replay, heatmaps and journey analytics. <b>Sentry, Noibu, Bugsnag</b> (error depth) and <b>FullStory, Hotjar, Contentsquare</b> (behavioral) own this — a multi-year data &amp; storage moat, deliberately not built. Provado consumes their output where present (stack traces, error IDs, session IDs) to enrich the symptom and pin a cause to a moment, and builds none of it.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-perf">
+        <h2>PERFORMANCE — expanded</h2>
+        <p class="dd">The symptom — degraded real-user Core Web Vitals and latency — is already detected by the APM every Adobe Commerce Cloud merchant runs (New Relic bundled; Datadog-class otherwise) plus CrUX field data, so Provado <b>consumes</b> it; rebuilding that detection would be waste and a credibility risk in front of a technical buyer. Provado’s job is the always-Own half: trace a degraded metric cross-stack to the operational change that caused it — the deploy, config or integration — and price it. <i>Build-practice / ACC-template attribution (which template, block or module is the cause) and rule-based optimization recommendations are promising but unvalidated on both feasibility and demand — they are tracked in the Needs Validation Backlog, not asserted here.</i></p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Core Web Vitals (LCP / INP / CLS, incl. mobile)</td><td class="c2"><span class="chip consume">Consume &amp; trace</span></td><td>Consume CWV field data from <b>CrUX</b> (Google’s Chrome User Experience Report — free, install-nothing, near-universal at origin level; page-level data is sparse on low-traffic URLs, which is where a separately-run RUM tool — New Relic Browser, RUMvision, SpeedCurve — supplements where present). New Relic <i>Browser</i>/RUM is <b>not</b> bundled on ACC (only server-side APM is), so CWV is not sourced from bundled New Relic. Trace a degraded vital cross-stack to the operational cause (deploy, config, integration, render path) and price it.</td></tr>
+          <tr><td class="c1">Page / API latency (server response, incl. the calls checkout depends on)</td><td class="c2"><span class="chip consume">Consume &amp; trace</span></td><td>Consume server-response latency from the <b>bundled server APM</b> (New Relic on ACC; Datadog-class otherwise). Trace a slowdown cross-stack to its operational cause — a stalled cron, a slow integration call, a bad deploy — and price the conversion impact.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-tseo">
+        <h2>TECHNICAL SEO &amp; STRUCTURED DATA — expanded</h2>
+        <p class="dd">The machine-readability layer — what tells Google and AI engines "this is a product, this is its price," and which bots may reach it. Provado monitors these states <b>continuously, anchored on the catalog</b>, as inputs to causation ("schema broke because the Mar-14 deploy changed the template"). It does not sell a point-in-time SEO audit (commoditized) or touch content quality (editorial).</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Schema.org / structured data validity</td><td class="c2"><span class="chip own">Own</span></td><td>Validates per template/page continuously; input to causation ("schema broke because the Mar-14 deploy changed the template").</td></tr>
+          <tr><td class="c1">robots.txt / sitemaps / canonicals / hreflang</td><td class="c2"><span class="chip own">Own</span></td><td>Watches eligibility state alongside deploy/config events, so an eligibility failure can be traced to the change that caused it.</td></tr>
+          <tr><td class="c1">Bot &amp; crawler management (per user-agent)</td><td class="c2"><span class="chip own">Own</span></td><td>Reads CDN/WAF crawler logs per bot (GPTBot vs OAI-SearchBot vs ClaudeBot — each bot tracked individually); detects the WAF rule that blocks a good bot.</td></tr>
+          <tr><td class="c1">WAF / CDN bot-rule operation</td><td class="c2"><span class="chip none">Out</span></td><td>Operating the WAF / CDN bot rules belongs to the platform / CDN / SI. The harmful effect of a bad rule (a good bot blocked) is detected under Bot &amp; crawler management above (Own); operating the rule is not Provado's.</td></tr>
+          <tr><td class="c1">Full SEO audit / rank-tracking platform</td><td class="c2"><span class="chip tp">3P covers</span></td><td>Commoditized (audit suites, rank trackers, $0–99 scanners). Provado monitors as causation input, never sells the audit.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-plat">
+        <h2>PLATFORM &amp; INTEGRATION — expanded (the Adobe Commerce guts)</h2>
+        <p class="dd">The platform-specific machinery — where Adobe Commerce depth is the moat. An APM sees a healthy server while the price index is three days stale; Provado knows the pattern.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Indexers (price · catalog · search · stock)</td><td class="c2"><span class="chip own">Own</span></td><td>Monitors index state and staleness; a stuck reindex = stale prices/search → feed disapprovals → conversion dip. One cause, three symptoms.</td></tr>
+          <tr><td class="c1">Cron jobs &amp; queues</td><td class="c2"><span class="chip own">Own</span></td><td>Watches the scheduled tasks (reindex, feed export, cache refresh) — the silently-failing cron is the classic invisible Adobe Commerce fault.</td></tr>
+          <tr><td class="c1">Cache configuration (FPC / Varnish)</td><td class="c2"><span class="chip own">Own</span></td><td>Diagnoses config-caused staleness and cache-invalidation faults.</td></tr>
+          <tr><td class="c1">Module / extension conflicts &amp; upgrade state</td><td class="c2"><span class="chip own">Own</span></td><td>Correlates third-party module changes and platform upgrades to new faults.</td></tr>
+          <tr><td class="c1">Admin / store config drift</td><td class="c2"><span class="chip own">Own</span></td><td>Detects config changes (who-changed-what) as causation events alongside deploys.</td></tr>
+          <tr><td class="c1">APIs / integration sync (PIM · ERP · OMS · feed)</td><td class="c2"><span class="chip own">Own</span></td><td>Monitors the sync jobs whose failures become Layer-0 divergences.</td></tr>
+          <tr><td class="c1">Tag manager container (mechanism)</td><td class="c2"><span class="chip own">Own</span></td><td>Detects the GTM container failing to load or fire (the mechanism); the trustworthy-numbers concern itself is Layer-0 tag governance.</td></tr>
+          <tr><td class="c1">Operating / maintaining the platform</td><td class="c2"><span class="chip none">Out</span></td><td>The SI's and merchant team's job. Provado diagnoses; it doesn't administer.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="drillpanel" id="drill-rel">
+        <h2>INFRA &amp; RELEASE — expanded</h2>
+        <p class="dd">The runtime substrate and, above all, <b>change</b> — every deploy is a suspect, and "what changed?" is the first diagnostic question. Provado correlates faults to the deploy / config / edge change that introduced them and prices the impact. It diagnoses <i>through</i> infra state but never operates the edge or answers the pager — that's the platform / CDN / SI band.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Coverage</th><th>What Provado does / doesn't</th></tr>
+          <tr><td class="c1">Deploy / release events</td><td class="c2"><span class="chip own">Own</span></td><td>CI webhooks + repo diffs. The "what changed?" answer key — the single most valuable correlation signal.</td></tr>
+          <tr><td class="c1">Hosting / CDN state</td><td class="c2"><span class="chip own">Own</span></td><td>Detects hosting / CDN-caused faults (stale or blocked responses at the edge) and traces them; operating the edge belongs to Adobe / CDN / SI (Out). On ACC, Fastly is Adobe-operated — the merchant doesn't hold the keys.</td></tr>
+          <tr><td class="c1">Caching / edge config</td><td class="c2"><span class="chip own">Own</span></td><td>Detects a bad edge rule serving stale pages or blocking bots and traces it; operating the cache belongs to platform / CDN (Out).</td></tr>
+          <tr><td class="c1">Incident response / SLA restoration</td><td class="c2"><span class="chip none">Out</span></td><td>The Sustain / SI / internal-IT band. Provado enters from revenue symptoms and silent drift, not from the pager.</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- LAYER 0 — DATA -->
+    <div class="layer">
+      <div class="rail" style="background:#57534E">
+        <div class="ln">LAYER 0</div><div class="lt">Data &amp; measurement</div>
+        <div class="ld">Ground truth under everything. If this is wrong, every finding above is wrong. Click a box.</div>
+      </div>
+      <div class="body">
+        <div class="dom clickable" id="surf-sor" onclick="showDrill(&#39;sor&#39;)"><h3>SYSTEMS OF RECORD <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip anchor">Order / revenue record</span><span class="chip anchor">Product master data</span><span class="chip none">Customer master data</span><span class="chip anchor">Inventory / stock record</span><span class="chip own">Cross-system data quality</span></div></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> ACC orders API/DB (read-only) · OMS/ERP API · PIM API · stock-everywhere consistency probes</div><span class="agent analy">ANALYTICS AGENT</span></div></div>
+        <div class="dom clickable" id="surf-mi" onclick="showDrill(&#39;mi&#39;)"><h3>MEASUREMENT INTEGRITY <span class="exp">▾</span></h3><div class="grp"><div class="chips"><span class="chip own">Analytics integrity</span><span class="chip own">Consent configuration</span><span class="chip own">Tag governance</span><span class="chip none">Channel attribution</span></div></div><div class="meta"><div class="telem"><b>TELEMETRY:</b> GA4 API / BigQuery export · full tag-inventory baseline (standard + custom) · CMP / consent-mode config reads</div><span class="agent analy">ANALYTICS AGENT</span></div></div>
+      </div>
+    </div>
+
+    <!-- LAYER 0 DRILLS -->
+    <div class="drillzone">
+      <div class="drillhint" id="hint-l0">↑ Click <b>Systems of Record</b> or <b>Measurement Integrity</b> to expand.</div>
+
+      <div class="drillpanel" id="drill-sor">
+        <h2>SYSTEMS OF RECORD — expanded</h2>
+        <p class="dd">Where the authoritative truth lives. Provado is read-only here: it <b>anchors</b> on these records and <b>diagnoses</b> where copies have drifted — it never owns or fixes the records themselves.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Provado's role</th><th>What that means</th></tr>
+          <tr><td class="c1">Order / revenue record<br><span style="font-weight:400;color:#7A6F5C">SoR: platform → OMS → ERP</span></td><td class="c2"><span class="chip anchor">Anchor (SoR)</span></td><td>Every revenue figure computed against real server-side orders (~99% accurate), not analytics. The yardstick.</td></tr>
+          <tr><td class="c1">Product master data<br><span style="font-weight:400;color:#7A6F5C">SoR: PIM (or platform)</span></td><td class="c2"><span class="chip anchor">Anchor (SoR)</span></td><td>The truth that feed, catalog, and search-index copies are checked against.</td></tr>
+          <tr><td class="c1">Customer master data<br><span style="font-weight:400;color:#7A6F5C">SoR: CRM / CDP</span></td><td class="c2"><span class="chip none">Out</span></td><td>Retention/CRM out of scope; touched only where divergence affects measurement.</td></tr>
+          <tr><td class="c1">Inventory / stock record<br><span style="font-weight:400;color:#7A6F5C">SoR: OMS / ERP</span></td><td class="c2"><span class="chip anchor">Anchor (SoR)</span></td><td>Checks authoritative stock is reflected everywhere it's consumed — PDP, feed, search index, agent surfaces, checkout. Symptoms: overselling, false out-of-stock, agent suppression.</td></tr>
+          <tr><td class="c1">Cross-system data quality</td><td class="c2"><span class="chip own">Own</span></td><td>Reconciles copies against the system of record; divergence is the fault. (Inventory consistency is the flagship case.)</td></tr>
+        </tbody></table>
+        <div class="dfan"><b>Server-side vs client-side:</b> browser tracking leaks 10–30%; the server-side order record is ~99% accurate. Provado anchors on the record and treats the gap as a measurement-integrity symptom.</div>
+      </div>
+
+      <div class="drillpanel" id="drill-mi">
+        <h2>MEASUREMENT INTEGRITY — expanded</h2>
+        <p class="dd">Whether the merchant's reporting reflects what actually happened. Where "I don't trust my numbers" gets diagnosed.</p>
+        <table class="l0tbl">
+          <tbody><tr><th>Component</th><th>Provado's role</th><th>What that means</th></tr>
+          <tr><td class="c1">Analytics integrity</td><td class="c2"><span class="chip own">Own</span></td><td>Detects when reported numbers don't reflect what actually happened — undercounting, inflated or double-counted events, tracking gaps — and traces each to its cause, so the merchant can trust their numbers.</td></tr>
+          <tr><td class="c1">Consent configuration</td><td class="c2"><span class="chip own">Own</span></td><td>Detects measurement loss caused by consent-mode / CMP <i>misconfiguration</i> and traces it. Carves out the CMP product itself (3P, OneTrust-class) and legal-compliance judgment (Out); never recovers lawfully-declined data.</td></tr>
+          <tr><td class="c1">Tag governance</td><td class="c2"><span class="chip own">Own</span></td><td>Learns the <b>full</b> tag inventory — standard <b>and</b> custom — baselines it, monitors all for breakage, traces breaks to cause. Monitors, doesn't operate, and isn't a standalone tag-audit product (ObservePoint-class) — the monitoring exists as causation input. Standard-only would be incomplete.</td></tr>
+          <tr><td class="c1">Channel attribution</td><td class="c2"><span class="chip none">Out</span></td><td>Marketing channel-credit modeling — off-thesis, crowded, deliberately out.</td></tr>
+        </tbody></table>
+
+        <div class="cmphdr">Tag governance: the specialist discipline vs Provado</div>
+        <table class="cmp">
+          <tbody><tr><th>Task</th><th>Analytics-governance discipline (strategist + tools)</th><th>Provado</th></tr>
+          <tr><td class="task">Design what to measure (strategy)</td><td>Yes — bespoke, tied to merchant goals</td><td class="no">No — advisory, off the causation thesis</td></tr>
+          <tr><td class="task">Audit standard ecommerce tags</td><td>Manual or tool-based</td><td class="yes">Yes — automated, vs GA4 standard + order record</td></tr>
+          <tr><td class="task">Learn &amp; audit custom tags</td><td>Manual, per engagement</td><td class="yes">Yes — learns &amp; baselines the full custom inventory</td></tr>
+          <tr><td class="task">Monitor tags for breakage (ongoing)</td><td>Periodic / manual</td><td class="yes">Yes — continuous, all tags</td></tr>
+          <tr><td class="task">Diagnose <i>why</i> a tag broke</td><td>Manual investigation</td><td class="yes">Yes — deploy-correlated, cross-stack (the unique part)</td></tr>
+          <tr><td class="task">Recommend fixes</td><td>Standard + bespoke</td><td>Standard / operational fixes; not bespoke strategy</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <p class="foot"><b>rev 18</b> — <b>AI-visibility reclassification (consume-where-present).</b> Driven by platform-native AI-readiness now shipping (Shopify catalog-completeness scoring + one-click ChatGPT / Gemini publish; Adobe Catalog Agent attribute-gap flagging; commercetools Commerce MCP). Tier-1 eligibility moves from Provado-own-build-now to <b>consume the platform signal where present, thin tripwire where not, never Out</b>, with the upstream cause, source-of-record truth, cross-surface blast radius, and price <b>always Provado's</b> — the same discipline already applied to APM and Merchant Center. The Tier-1 checklist is split into Group A (platform-provided, consume &amp; verify) and Group B (durably Provado: price/availability-vs-SoR, cross-surface blast radius, upstream-cause / deploy correlation); a rationale box was added; the "AI crawlers actually fetched" row now notes the Adobe LLM Optimizer overlap. The Discover AI-channel rows were reframed to consume-platform-readiness-then-diagnose-the-cause (disposition kept ✓ Diagnose). <b>Scoped to AI-visibility detection only</b> — the Layer-1 schema / SSR and Layer-2 attribute-completeness Own chips are unchanged (they serve human and SEO surfaces, and the cross-stack cause there is still Provado's). The standalone-pillar question is left to the PRD. <b>· rev 17:</b> <b>Layer-3 cross-link consistency.</b> Added the missing surface→layer click-throughs so every problem that names a cause-home links to it: Evaluate on-site search → Search &amp; Merchandising; Evaluate degrading-recs → Measurement integrity (the data feeding the model); Retain returns-from-bad-data → Product &amp; Catalog (product-data accuracy). No coverage states or chips changed. <b>· rev 16:</b> <b>Layer-3 reframe: surfaces expressed as the problems a merchant feels.</b> Surface chips moved off the coverage palette to a neutral <b>symptom</b> colour (channels / areas kept as the spine). Each surface drill now opens with a full <b>problem inventory</b> — what a merchant feels on Discover / Evaluate / Convert / Retain, in their words — each tagged with a <b>disposition</b>: ✓ Diagnose, ◐ Partial, ⊘ Out (with who owns it), ⏸ Deferred; the diagnosis-by-layer trace stays beneath as "how a diagnosable problem traces to its cause." Pains added from the research evidence: <b>on-site search</b> (Evaluate), <b>false declines</b> (Convert), the <b>"I don't trust my numbers" measurement gap</b> (Convert, cross-cutting), <b>degrading recs from bad data</b> (Evaluate), and the <b>returns-from-bad-product-data</b> boundary case (Retain — symptom out, cause ours). Cross-links added: Discover → Agentic Protocols, Convert → Pricing &amp; Promotions and → Internationalization. Legend gains a Layer-3 line that distinguishes the diagnosis (always Provado's) from symptom detection (Provado-built or consumed). <b>· rev 15:</b> <b>Drill descriptions cross-check.</b> Added a one-line lead brief to the six drills that previously jumped straight into their table — the four Layer-2 boxes from the rev-14 walk (Pricing &amp; Promotions, Cart/Checkout &amp; Payments, Content &amp; Recommendations, Internationalization) plus Technical SEO &amp; Structured Data and Infra &amp; Release — matching the existing lead style (plain-language what-the-box-is, then Provado's role / boundary). No coverage states or chips changed. <b>· rev 14:</b> <b>Layer-2 capability walk (Pricing, Cart/Checkout, Content, i18n).</b> Every retired amber <b>Partial</b> in these four boxes resolved to an unambiguous state. <b>Pricing &amp; Promotions:</b> price accuracy and promo-configuration faults both <b>Own</b> — the platform shows a rule is <i>active</i>, not that it still <i>applies</i>, and no tool watches rule effect (detection tripwire-grade; trace + price always Own); feed-price-mismatch consumed via the Product &amp; Catalog disapprovals cell, not rebuilt; strategy + repricing logic <b>Out</b>. <b>Cart/Checkout &amp; Payments:</b> checkout orchestration <b>Own</b> (capability-config fault; checkout symptoms consumed via Rendering / Performance / L0, not rebuilt), payment-gateway health <b>Consume &amp; trace</b> (PSP decline/auth telemetry is near-universal), processing/fraud <b>3P covers</b>, CRO/design <b>Out</b>. <b>Content &amp; Recommendations:</b> CMS serving and recs-widget firing both <b>Own</b> (operational slice; render symptom consumed via Rendering), recs/personalization engine <b>3P covers</b> (two redundant chips collapsed to one), copy <b>Out</b>. <b>Internationalization:</b> multi-currency and geo-tax config both <b>Own</b> (per-locale price accuracy + config-fault localisation), tax engine <b>3P covers</b>, localised catalog/language <b>Out</b>. Box faces synced to their drills; mirrored Layer-3 Convert/Evaluate drill chips recoloured to match (full L3 colour-semantics reframe still deferred). <b>· rev 13:</b> all internal decision/discovery dates removed from the diagram body; the agentic read-only boundary (serving content / operating the edge) moved out of the lead prose into its own <b>Out</b> component row. <b>· prior:</b> <b>Agentic split (de-duped).</b> The single “Agentic — later” bucket is split three ways: <b>agent-channel discovery readiness → Own (built thin)</b>, defined by <i>reference</i> to the feed / catalog / crawler cells that already exist (Product &amp; Catalog, Technical SEO, Rendering, Tier-1) plus only two new pieces (agent/MCP endpoint live + authenticated + current; product fields meeting the agents’ own feed spec); <b>agentic checkout → Deferred</b> (payment plumbing, thin mid-market adoption, read-outcome-never-process); <b>protocol-drift watch → white space, validate adoption first</b> (specs churn, no one monitors compliance as they move). Discover “Agentic discovery” chip recoloured Deferred → Own to match. Read-only boundary reaffirmed: Provado never serves content (Scrunch/agencies, 3P) or operates the edge (Adobe-Fastly on ACC, Out). <b>· rev 11:</b> <b>Appendix A.1 / A.2 cross-check.</b> Performance / CWV source corrected: Core Web Vitals consumed from <b>CrUX</b> (free, install-nothing, near-universal; page-level sparse on low-traffic URLs, supplemented by a separately-run RUM tool where present), <b>not</b> from New Relic Browser — which A.1 confirms is excluded from both ACC bundles (only server-side APM is bundled; latency stays on it). AI visibility: full presence / <b>share-of-voice reclassified 3P-covers → Out</b> (it localizes no operational cause and moves for exogenous reasons; Provado consumes only the narrow retrieval/citation-drop trigger, owned thin) — aligning the diagram with the prior SOV-is-Out decision. Profound stays named as a complementary tool. (Agentic split — discovery-readiness → Own, checkout → Deferred, protocol-drift → white-space — pending de-dup against existing Product&amp;Catalog / Tier-1 cells.) <b>· rev 10:</b> <b>Client-side surface made honest on detect vs trace.</b> Rendering &amp; Front-end: JavaScript execution recoloured to <b>Consume &amp; trace</b> (drill carries the Consume-Sentry / Own*-tripwire branch; * = ICP error-tool adoption, to confirm in discovery); the front-end-error <i>depth</i> (grouping, segmentation, reproduction) folded into <b>3P covers</b> alongside session replay / heatmaps (FullStory, Hotjar, Contentsquare; Sentry, Noibu, Bugsnag) — the Deferred “maybe-build” hedge removed; render-blocking-resources definition corrected. Performance: reduced to the two real detection components — <b>Core Web Vitals</b> and <b>Page / API latency</b>, both <b>Consume &amp; trace</b> (New Relic Browser / APM + CrUX; no no-APM fallback, APM is universal on ACC). The former third chip “build-practice &amp; change attribution” is removed because it bundled the always-Own trace with an unvalidated capability: <b>change correlation</b> stays asserted as Provado’s core Own trace, while <b>build-practice / ACC-template attribution</b> and <b>CWV optimization recommendations</b> are demoted to the Needs Validation Backlog (feasibility + value; recommendations flagged as the candidate §1.7 execution-path bridge). Layer-3 Evaluate &amp; Convert drills recoloured to match (JS errors, page performance / latency → Consume); broader L3 colour-semantics reframe still deferred. <b>Q5 closed:</b> front-end “user experience” is a symptom felt at Convert / Evaluate, traced down to L1 Rendering (+ L2 Cart / Checkout) — not a missing PBC. (rev 9: Performance first split field-CWV <b>Consume &amp; trace</b> from a build-practice <b>Own</b> — the build-practice/template-attribution half is demoted to a validation bet in rev 10.) (rev 8: Layers 0 &amp; 1 reclassified, Search closed.) No 3P is claimed to "structurally cannot" trace cause — tracing is manual and slow today; Provado does it automatically. (rev 4 prior: Search/Catalog recuts; rev 3: Product &amp; Catalog closed, AI-visibility diagnosis.) Expandable boxes · telemetry rows · cause-domain agent tags (hypothesis) · anchor + consume-and-trace + 3P-covers states. &nbsp;Agent legend: INFRA · TECH-SEO/SD · FEED · COMMERCE* · ANALYTICS — cause-domain hypothesis only; final decomposition is an engineering architecture decision (* = COMMERCE in particular may split). Telemetry lists are working hypotheses. Where others own the blank space: Sustain / APM &amp; SI — infra and incident response; Profound-class vendors — AI presence measurement; agencies — content, paid, off-site, CRO.</p>
+  </div>
+
+  <script>
+    function showDrill(id){
+      var panels = document.querySelectorAll('#ecom-map .drillpanel');
+      for (var i=0;i<panels.length;i++){ panels[i].style.display='none'; }
+      var doms = document.querySelectorAll('#ecom-map .dom.clickable');
+      for (var j=0;j<doms.length;j++){ doms[j].classList.remove('active'); }
+      var hints = document.querySelectorAll('#ecom-map .drillhint');
+      for (var k=0;k<hints.length;k++){ hints[k].style.display='none'; }
+      var panel = document.getElementById('drill-'+id);
+      var surf = document.getElementById('surf-'+id);
+      if (panel){ panel.style.display='block'; }
+      if (surf){ surf.classList.add('active'); }
+      if (panel && panel.scrollIntoView){ panel.scrollIntoView({behavior:'smooth', block:'nearest'}); }
+    }
+  </script>
+</div>
+
+
+</body></html>
