@@ -3,6 +3,10 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="doc-version" content="rev23">
 <title>Provado Coverage Map — e-commerce revenue stack</title>
 </head>
 <body style="margin:0">
@@ -602,5 +606,45 @@
   </script>
 </div>
 
+<!-- Auto-update notifier: tells viewers when a newer version of this page is published, without changing the URL. -->
+<div id="pv-update-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:99999;background:#102A43;color:#fff;font-family:'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;font-size:14px;padding:12px 18px;box-shadow:0 2px 10px rgba(0,0,0,.25);text-align:center;">
+  <span style="vertical-align:middle;">🔄 A new version of this page is available.</span>
+  <button id="pv-update-reload" style="vertical-align:middle;margin-left:12px;background:#2EC4B6;color:#08313B;border:none;border-radius:6px;padding:7px 16px;font-weight:700;font-size:13px;cursor:pointer;">Refresh now</button>
+  <button id="pv-update-dismiss" style="vertical-align:middle;margin-left:8px;background:transparent;color:#cdd7e2;border:1px solid #3a5673;border-radius:6px;padding:7px 12px;font-size:13px;cursor:pointer;">Dismiss</button>
+</div>
+<script>
+(function(){
+  var META = document.querySelector('meta[name="doc-version"]');
+  var CURRENT = META ? META.getAttribute('content') : null;
+  if (!CURRENT) return;
+  var banner = document.getElementById('pv-update-banner');
+  var reloadBtn = document.getElementById('pv-update-reload');
+  var dismissBtn = document.getElementById('pv-update-dismiss');
+  var dismissed = false;
+  reloadBtn.onclick = function(){ location.reload(true); };
+  dismissBtn.onclick = function(){ dismissed = true; banner.style.display = 'none'; };
+  function check(){
+    if (dismissed) return;
+    try {
+      var url = location.pathname + '?_pv=' + Date.now();
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.setRequestHeader('Cache-Control', 'no-cache');
+      xhr.onreadystatechange = function(){
+        if (xhr.readyState === 4 && xhr.status === 200){
+          var m = xhr.responseText.match(/<meta[^>]+name=["']doc-version["'][^>]+content=["']([^"']+)["']/i);
+          if (m && m[1] && m[1] !== CURRENT && !dismissed){
+            banner.style.display = 'block';
+          }
+        }
+      };
+      xhr.send();
+    } catch(e){}
+  }
+  // First check shortly after load, then every 2 minutes.
+  setTimeout(check, 8000);
+  setInterval(check, 120000);
+})();
+</script>
 
 </body></html>
